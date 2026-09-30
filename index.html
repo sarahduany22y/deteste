@@ -23,12 +23,12 @@
     :root {
       --bg-dark: #0a0f1a;
       --card-bg: #111827;
-      --glass: rgba(17, 24, 39, 0.88);
+      --glass: rgba(17, 24, 39, 0.92);
       --green-pix: #22c55e;
       --green-neon: #22c55e;
       --text-main: #f1f5f9;
       --text-sub: #94a3b8;
-      --border: rgba(34, 197, 94, 0.18);
+      --border: rgba(34, 197, 94, 0.2);
     }
 
     * { box-sizing: border-box; margin:0; padding:0; }
@@ -46,8 +46,7 @@
     /* HEADER GLASSMORPHISM + NEON */
     header {
       background: var(--glass);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
+      backdrop-filter: blur(30px);
       border-bottom: 1px solid var(--border);
       padding: 16px 24px;
       position: sticky;
@@ -73,12 +72,11 @@
       font-size: 24px;
       font-weight: 900;
       color: white;
-      box-shadow: 0 0 25px rgba(34, 197, 94, 0.7),
-                  0 0 45px rgba(34, 197, 94, 0.35);
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.7), 0 0 45px rgba(34, 197, 94, 0.35);
       border: 4px solid rgba(255,255,255,0.25);
     }
 
-    /* GRID MODERNO */
+    /* GRID BENTO MODERNO */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -153,7 +151,7 @@
     .modal, .reviews-section, .demo-section {
       background: var(--glass);
       border: 1px solid var(--border);
-      backdrop-filter: blur(25px);
+      backdrop-filter: blur(30px);
       box-shadow: 0 10px 35px rgba(0,0,0,0.6);
     }
 
@@ -174,11 +172,7 @@
 <body>
 
   <!-- POP-UP VERIFICAÇÃO DE IDADE (+18) -->
-  <div id="popup-idade" style="
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background-color: rgba(0, 0, 0, 0.96); display: flex; justify-content: center; align-items: center;
-    z-index: 999999; backdrop-filter: blur(8px);
-  ">
+  <div id="popup-idade" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.96); display: flex; justify-content: center; align-items: center; z-index: 999999; backdrop-filter: blur(8px);">
     <div style="background: #131a24; border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 16px; padding: 26px 20px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 0 30px rgba(239, 68, 68, 0.2); color: #ffffff;">
       <h2 style="color: #ef4444; margin-top: 0; margin-bottom: 10px; font-size: 20px; font-weight: 800;">🔞 CONTEÚDO EXCLUSIVO (+18)</h2>
       <p style="font-size: 14px; color: #9ca3af; margin-bottom: 12px; line-height: 1.4;">Este site contém material restrito para maiores de idade.</p>
@@ -208,11 +202,12 @@
 
   <main class="main-container">
 
-    <!-- HERO BANNER -->
+    <!-- HERO BANNER – HOOK NOS PRIMEIROS 3 SEGUNDOS -->
     <div class="hero-banner">
       <span class="badge-promo">🔥 PROMOÇÃO POR TEMPO LIMITADO</span>
       <h2>Acesso Imediato à Galeria VIP Privada</h2>
-      <p>Escolha a categoria desejada abaixo e assista todo o acervo online em alta definição. <b>Sem mensalidades ou cobranças recorrentes!</b></p>
+      <p>365 Dias de vídeos amadores reais, vazados e exclusivos. Sem censura. Sem cobrança recorrente.</p>
+      <button id="buy-hero" class="btn-buy" onclick="iniciarCompra('amador')">⚡ ENTRAR NA GALERIA VIP AGORA – R$ 19,90</button>
     </div>
 
     <!-- VÍDEO DE DEMONSTRAÇÃO -->
@@ -225,7 +220,7 @@
       </div>
     </div>
 
-    <!-- LISTA DE CATEGORIAS VIP -->
+    <!-- GRID DE CATEGORIAS -->
     <div class="grid">
       
       <!-- Categoria 1: Amador -->
@@ -501,4 +496,480 @@
 
             if (badge) { 
               badge.innerHTML = "🔓 Liberado"; 
-              badge.className = "status-badge
+              badge.className = "status-badge liberado"; 
+            }
+            if (btnBuy) btnBuy.style.setProperty('display', 'none', 'important');
+            if (btnPaypal) btnPaypal.style.setProperty('display', 'none', 'important');
+            if (btnAccess) btnAccess.style.display = "block";
+          });
+        }
+      } catch (err) {
+        console.error("Erro ao verificar compras:", err);
+      }
+    }
+
+    // ==================== FUNÇÕES DO CHAT ====================
+    async function verificarSeUsuarioEstaBanido(userId) {
+      if (!userId) return false;
+      try {
+        const { data, error } = await _supabase
+          .from('usuarios_banidos')
+          .select('*')
+          .eq('user_id', userId);
+
+        if (error || !data || data.length === 0) return false;
+
+        const agora = new Date();
+        for (const registro of data) {
+          if (!registro.expira_em) return true;
+          if (new Date(registro.expira_em) > agora) return true;
+        }
+        return false;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    async function banirUsuario(userId, dias) {
+      if (!ehAdmin) return;
+      let expiraEm = null;
+
+      if (dias > 0) {
+        const dataExp = new Date();
+        dataExp.setDate(dataExp.getDate() + dias);
+        expiraEm = dataExp.toISOString();
+      }
+
+      const { error } = await _supabase
+        .from('usuarios_banidos')
+        .insert([{ user_id: userId, expira_em: expiraEm }]);
+
+      if (error) {
+        alert("Erro ao aplicar banimento: " + error.message);
+      } else {
+        alert(dias === 0 ? "Usuário Banido PERMANENTEMENTE!" : `Usuário suspenso por ${dias} dia(s)!`);
+        carregarListaBanidosAdmin();
+      }
+    }
+
+    async function removerBanimento(banId) {
+      if (!ehAdmin) return;
+      const { error } = await _supabase
+        .from('usuarios_banidos')
+        .delete()
+        .eq('id', banId);
+
+      if (!error) {
+        carregarListaBanidosAdmin();
+      } else {
+        alert("Erro ao remover banimento.");
+      }
+    }
+
+    async function carregarListaBanidosAdmin() {
+      const container = document.getElementById('listaUsuariosBanidos');
+      if (!container) return;
+
+      const { data, error } = await _supabase
+        .from('usuarios_banidos')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      container.innerHTML = '';
+      if (error || !data || data.length === 0) {
+        container.innerHTML = '<span style="font-size:11px; color:var(--text-sub);">Nenhum usuário banido no momento.</span>';
+        return;
+      }
+
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:#131a24; padding:6px 10px; border-radius:6px; font-size:11px;';
+        const status = item.expira_em ? `Restrito até: ${new Date(item.expira_em).toLocaleDateString()}` : 'Banido Permanente';
+        div.innerHTML = `
+          <span>ID: <b>${item.user_id.substring(0,8)}...</b> (${status})</span>
+          <button onclick="removerBanimento(${item.id})" style="background:#22c55e; color:#fff; border:none; padding:2px 8px; border-radius:4px; cursor:pointer; font-weight:bold;">Desbanir</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    async function carregarPalavrasProibidasBanco() {
+      try {
+        const { data, error } = await _supabase
+          .from('palavras_proibidas')
+          .select('*')
+          .order('palavra', { ascending: true });
+
+        if (!error && data) {
+          palavrasProibidasBanco = data.map(item => item.palavra.toLowerCase());
+          if (ehAdmin) renderizarChipsPalavrasProibidas(data);
+        }
+      } catch (err) {
+        console.error("Erro ao buscar palavras proibidas:", err);
+      }
+    }
+
+    function renderizarChipsPalavrasProibidas(lista) {
+      const container = document.getElementById('listaPalavrasProibidas');
+      if (!container) return;
+
+      container.innerHTML = '';
+      if (lista.length === 0) {
+        container.innerHTML = '<span style="font-size:11px; color:var(--text-sub);">Nenhuma palavra cadastrada.</span>';
+        return;
+      }
+
+      lista.forEach(item => {
+        const badge = document.createElement('span');
+        badge.style.cssText = 'display:inline-flex; align-items:center; gap:4px; background:rgba(239,68,68,0.2); color:#ef4444; border:1px solid rgba(239,68,68,0.3); padding:2px 8px; border-radius:12px; font-size:11px; font-weight:bold;';
+        badge.innerHTML = `
+          ${escaparHTML(item.palavra)}
+          <button onclick="removerPalavraProibida(${item.id})" style="background:none; border:none; color:#ef4444; cursor:pointer; font-weight:bold; font-size:12px; margin-left:2px;">&times;</button>
+        `;
+        container.appendChild(badge);
+      });
+    }
+
+    async function adicionarPalavraProibida() {
+      const input = document.getElementById('inputPalavraProibida');
+      const palavra = input.value.trim().toLowerCase();
+
+      if (!palavra) return;
+
+      const { error } = await _supabase
+        .from('palavras_proibidas')
+        .insert([{ palavra }]);
+
+      if (error) {
+        alert('Erro ao adicionar palavra.');
+      } else {
+        input.value = '';
+        await carregarPalavrasProibidasBanco();
+      }
+    }
+
+    async function removerPalavraProibida(id) {
+      const { error } = await _supabase
+        .from('palavras_proibidas')
+        .delete()
+        .eq('id', id);
+
+      if (!error) await carregarPalavrasProibidasBanco();
+    }
+
+    function contemPalavrasProibidasOuLinks(texto) {
+      const textoLower = texto.toLowerCase();
+      const regexLinksEAt = /(https?:\/\/|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}|www\.|t\.me|wa\.me|@)/i;
+      if (regexLinksEAt.test(textoLower)) {
+        return true;
+      }
+
+      const todosOsTermos = [...TERMOS_PADRAO, ...palavrasProibidasBanco];
+      return todosOsTermos.some(termo => termo && textoLower.includes(termo.toLowerCase()));
+    }
+
+    async function verificarSeUserEhVip(userId) {
+      if (!userId) return false;
+      try {
+        const { data } = await _supabase
+          .from('compras_usuario')
+          .select('id')
+          .eq('user_id', userId)
+          .gt('data_expiracao', new Date().toISOString())
+          .limit(1);
+
+        return data && data.length > 0;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    async function carregarMensagensAntigas() {
+      try {
+        const { data: mensagens, error } = await _supabase
+          .from('chat_mensagens')
+          .select('*')
+          .order('created_at', { ascending: true })
+          .limit(60);
+
+        const box = document.getElementById('chat-mensagens');
+        if (!box) return;
+        box.innerHTML = '';
+
+        if (error) {
+          box.innerHTML = '<div style="font-size: 12px; color: #ef4444; text-align: center;">Erro ao carregar o chat.</div>';
+          return;
+        }
+
+        if (mensagens && mensagens.length > 0) {
+          for (const m of mensagens) {
+            const ehVip = await verificarSeUserEhVip(m.user_id);
+            adicionarMensagemNaTela(m.id, m.user_id, m.nome_exibicao, m.mensagem, ehVip);
+          }
+        } else {
+          box.innerHTML = '<div style="font-size: 12px; color: var(--text-sub); text-align: center;">Seja o primeiro a enviar uma mensagem no chat!</div>';
+        }
+        box.scrollTop = box.scrollHeight;
+      } catch (err) {
+        console.error("Erro ao carregar mensagens:", err);
+      }
+    }
+
+    function escutarNovasMensagens() {
+      _supabase
+        .channel('public:chat_mensagens')
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_mensagens' }, async payload => {
+          const m = payload.new;
+          const ehVip = await verificarSeUserEhVip(m.user_id);
+          adicionarMensagemNaTela(m.id, m.user_id, m.nome_exibicao, m.mensagem, ehVip);
+          const box = document.getElementById('chat-mensagens');
+          if (box) box.scrollTop = box.scrollHeight;
+        })
+        .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'chat_mensagens' }, payload => {
+          const el = document.getElementById(`msg-item-${payload.old.id}`);
+          if (el) el.remove();
+          
+          const box = document.getElementById('chat-mensagens');
+          if (box && box.children.length === 0) {
+            box.innerHTML = '<div style="font-size: 12px; color: var(--text-sub); text-align: center;">Seja o primeiro a enviar uma mensagem no chat!</div>';
+          }
+        })
+        .subscribe();
+    }
+
+    function adicionarMensagemNaTela(msgId, userId, nome, texto, ehVip = false) {
+      const box = document.getElementById('chat-mensagens');
+      if (!box) return;
+
+      if (box.children.length === 1 && box.children[0].innerText.includes('Seja o primeiro')) {
+        box.innerHTML = '';
+      }
+
+      const ehEsseUserAdmin = (nome.toLowerCase() === 'chico' || userId === 'ADMIN_ID' || (usuarioAtual && usuarioAtual.email.toLowerCase() === EMAIL_ADMIN.toLowerCase() && usuarioAtual.id === userId));
+      
+      let seloTag = '';
+      if (ehEsseUserAdmin) {
+        seloTag = `<span class="tag-adm-vermelha">[ADM] 🔴</span>`;
+      } else if (ehVip) {
+        seloTag = `<span class="tag-vip-amarela">[VIP] 🟨</span>`;
+      }
+
+      let botoesAcao = '';
+      const ehDonoDaMensagem = usuarioAtual && (usuarioAtual.id === userId);
+
+      if (ehAdmin) {
+        botoesAcao = `
+          <div class="btn-adm-actions">
+            <button class="btn-del-msg" onclick="deletarMensagem('${msgId}')">Excluir</button>
+            <button class="btn-ban-user" onclick="promptBanirUsuario('${userId}')">Banir/Restringir</button>
+          </div>
+        `;
+      } else if (ehDonoDaMensagem) {
+        botoesAcao = `
+          <div class="btn-adm-actions">
+            <button class="btn-del-msg" onclick="deletarMinhaMensagem('${msgId}')">Apagar</button>
+          </div>
+        `;
+      }
+
+      const div = document.createElement('div');
+      div.id = `msg-item-${msgId}`;
+      div.style.cssText = `
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid var(--border);
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+        line-height: 1.4;
+        word-break: break-word;
+      `;
+      div.innerHTML = `${botoesAcao}<b style="color: var(--green-pix);">${escaparHTML(nome)}</b>${seloTag}: <span style="color: #e5e7eb;">${escaparHTML(texto)}</span>`;
+      box.appendChild(div);
+    }
+
+    function promptBanirUsuario(userId) {
+      const opcao = prompt("Escolha a duração do banimento:\n1 = 1 dia\n3 = 3 dias\n7 = 7 dias\n15 = 15 dias\n0 = BAN PERMANENTE");
+      if (opcao === null) return;
+      const dias = parseInt(opcao);
+      if (!isNaN(dias)) {
+        banirUsuario(userId, dias);
+      }
+    }
+
+    async function enviarMensagemChat() {
+      if (!usuarioAtual) {
+        alert("Você precisa criar uma conta ou entrar para participar do chat!");
+        abrirModal();
+        return;
+      }
+
+      const estaBanido = await verificarSeUsuarioEstaBanido(usuarioAtual.id);
+      if (estaBanido) {
+        alert("Sua conta está impossibilitada de enviar mensagens no chat no momento.");
+        return;
+      }
+
+      if (!meuApelidoChat) {
+        carregarApelidoDoUsuario();
+        if (!meuApelidoChat) {
+          const nomeDigitado = prompt("Escolha o seu apelido para o chat:");
+          if (!nomeDigitado || !nomeDigitado.trim()) return;
+          
+          if (contemPalavrasProibidasOuLinks(nomeDigitado)) {
+            alert("Apelido inválido ou com caracteres/termos proibidos.");
+            return;
+          }
+
+          meuApelidoChat = nomeDigitado.trim();
+          localStorage.setItem(`chat_apelido_${usuarioAtual.id}`, meuApelidoChat);
+        }
+      }
+
+      const input = document.getElementById('chat-input-texto');
+      const texto = input.value.trim();
+
+      if (!texto) return;
+
+      if (texto.length > 150) {
+        alert("Sua mensagem ultrapassou o limite de 150 caracteres.");
+        return;
+      }
+
+      if (contemPalavrasProibidasOuLinks(texto)) {
+        alert("Proibido o envio de links, redes sociais (@) ou palavras não permitidas.");
+        return;
+      }
+
+      input.value = '';
+
+      const { error } = await _supabase
+        .from('chat_mensagens')
+        .insert([
+          { 
+            user_id: usuarioAtual.id, 
+            nome_exibicao: meuApelidoChat, 
+            mensagem: texto 
+          }
+        ]);
+
+      if (error) {
+        console.error("Erro no envio:", error);
+        alert("Erro ao enviar mensagem no chat.");
+      }
+    }
+
+    function alterarNomeChat() {
+      if (!usuarioAtual) {
+        alert("Você precisa estar logado para alterar seu apelido.");
+        abrirModal();
+        return;
+      }
+
+      const novoNome = prompt("Digite seu novo apelido:", meuApelidoChat);
+      if (novoNome && novoNome.trim()) {
+        if (contemPalavrasProibidasOuLinks(novoNome)) {
+          alert("Apelido contém termos ou símbolos não permitidos!");
+          return;
+        }
+        meuApelidoChat = novoNome.trim();
+        localStorage.setItem(`chat_apelido_${usuarioAtual.id}`, meuApelidoChat);
+        alert("Apelido alterado com sucesso para: " + meuApelidoChat);
+      }
+    }
+
+    async function deletarMinhaMensagem(msgId) {
+      if (!usuarioAtual) return;
+      if (!confirm("Deseja apagar sua mensagem?")) return;
+
+      const { error } = await _supabase
+        .from('chat_mensagens')
+        .delete()
+        .eq('id', msgId)
+        .eq('user_id', usuarioAtual.id);
+
+      if (error) {
+        alert("Erro ao apagar mensagem.");
+      } else {
+        const el = document.getElementById(`msg-item-${msgId}`);
+        if (el) el.remove();
+      }
+    }
+
+    async function deletarMensagem(msgId) {
+      if (!ehAdmin) return;
+      if (!confirm("Deseja apagar esta mensagem como Administrador?")) return;
+
+      const { error } = await _supabase
+        .from('chat_mensagens')
+        .delete()
+        .eq('id', msgId);
+
+      if (error) {
+        alert("Erro ao excluir mensagem.");
+      } else {
+        const el = document.getElementById(`msg-item-${msgId}`);
+        if (el) el.remove();
+        carregarListaAdmin();
+      }
+    }
+
+    async function limparChatInteiro() {
+      if (!ehAdmin) return;
+      if (!confirm("⚠️ ATENÇÃO: Tem certeza que deseja APAGAR TODAS as mensagens do chat? Esta ação não pode ser desfeita!")) return;
+
+      const { error } = await _supabase
+        .from('chat_mensagens')
+        .delete()
+        .gt('id', 0);
+
+      if (error) {
+        alert("Erro ao limpar chat: " + error.message);
+      } else {
+        alert("Chat limpo com sucesso!");
+        carregarMensagensAntigas();
+        carregarListaAdmin();
+      }
+    }
+
+    async function carregarListaAdmin() {
+      const box = document.getElementById('admin-lista-msgs');
+      if (!box) return;
+      
+      const { data: mensagens } = await _supabase
+        .from('chat_mensagens')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(30);
+
+      box.innerHTML = '';
+      if (!mensagens || mensagens.length === 0) {
+        box.innerHTML = '<div style="font-size:12px; color:var(--text-sub); text-align:center;">Nenhuma mensagem enviada.</div>';
+        return;
+      }
+
+      mensagens.forEach(m => {
+        const item = document.createElement('div');
+        item.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:#131a24; padding:6px; border-radius:6px; font-size:11px;';
+        item.innerHTML = `
+          <div>
+            <b style="color:var(--green-pix);">${escaparHTML(m.nome_exibicao)}:</b> 
+            <span style="color:#fff;">${escaparHTML(m.mensagem)}</span>
+          </div>
+          <div style="display:flex; gap:4px;">
+            <button onclick="promptBanirUsuario('${m.user_id}')" style="background:#7c3aed; color:#fff; border:none; padding:2px 6px; border-radius:4px; font-weight:bold; cursor:pointer;">Banir</button>
+            <button onclick="deletarMensagem('${m.id}')" style="background:#ef4444; color:#fff; border:none; padding:2px 6px; border-radius:4px; font-weight:bold; cursor:pointer;">Apagar</button>
+          </div>
+        `;
+        box.appendChild(item);
+      });
+    }
+
+    function escaparHTML(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
+  </script>
+
+</body>
+</html>
