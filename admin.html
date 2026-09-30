@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel ADM - Controle & Logs</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root { --bg: #0b0e14; --card: #131a24; --green: #22c55e; --text: #fff; --sub: #94a3b8; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 16px; margin: 0; }
+    h1 { font-size: 20px; text-align: center; margin-bottom: 16px; }
+    
+    /* MENU DE ABAS */
+    .tabs-nav { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tab-btn { flex: 1; padding: 12px; background: var(--card); border: 1px solid rgba(255,255,255,0.1); color: var(--sub); font-weight: bold; border-radius: 8px; cursor: pointer; text-align: center; }
+    .tab-btn.active { background: var(--green); color: #000; border-color: var(--green); }
+
+    /* CONTEÚDO DAS ABAS */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .card { background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.1); }
+    h2 { font-size: 16px; margin-top: 0; margin-bottom: 12px; color: var(--text); }
+    
+    input, select, button { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px; border: 1px solid #333; background: #080b10; color: #fff; font-size: 14px; box-sizing: border-box; }
+    button.btn-primary { background: var(--green); color: #000; font-weight: bold; cursor: pointer; border: none; margin-top: 10px; }
+    
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+    th, td { padding: 10px 6px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); word-break: break-all; }
+    th { color: var(--sub); background: rgba(255,255,255,0.03); }
+    .badge { background: #22c55e22; color: #22c55e; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+    .date-text { color: var(--sub); font-size: 11px; }
+  </style>
+</head>
+<body>
+
+  <h1>📱 Painel ADM</h1>
+
+  <!-- NAVEGAÇÃO DE ABAS -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="trocarAba('aba-liberacao', this)">⚡ Liberação</button>
+    <button class="tab-btn" onclick="trocarAba('aba-logs', this)">📋 Logs de E-mails</button>
+  </div>
+
+  <!-- ================= ABA 1: LIBERAÇÃO MANUAL ================= -->
+  <div id="aba-liberacao" class="tab-content active">
+    <div class="card">
+      <h2>⚡ Liberação Manual (PayPal / Teste)</h2>
+      <input type="email" id="adm-email" placeholder="E-mail do Cliente">
+      <select id="adm-categoria">
+        <option value="amador">Amador VIP</option>
+        <option value="cam">Spycam VIP</option>
+        <option value="hentai">Hentai VIP</option>
+      </select>
+      <select id="adm-dias">
+        <option value="365">1 Ano (365 Dias)</option>
+        <option value="30">1 Mês (30 Dias)</option>
+        <option value="7">Teste (7 Dias)</option>
+      </select>
+      <button class="btn-primary" onclick="liberarAcessoManual()">LIBERAR ACESSO AGORA</button>
+    </div>
+
+    <div class="card">
+      <h2>🛒 Últimas Vendas / Liberações</h2>
+      <button onclick="carregarVendas()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">🔄 Atualizar Vendas</button>
+      <table>
+        <thead>
+          <tr>
+            <th>E-mail do Cliente</th>
+            <th>Cat.</th>
+            <th>Expiração</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-vendas">
+          <tr><td colspan="3" style="text-align:center;">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================= ABA 2: LOGS DE USUÁRIOS REGISTRADOS ================= -->
+  <div id="aba-logs" class="tab-content">
+    <div class="card">
+      <h2>📋 E-mails Cadastrados no Sistema</h2>
+      <input type="text" id="busca-log" placeholder="🔍 Pesquisar e-mail..." onkeyup="filtrarLogs()">
+      <button onclick="carregarLogsUsuarios()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">🔄 Atualizar Logs</button>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Data Cadastro</th>
+            <th>E-mail</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-logs">
+          <tr><td colspan="2" style="text-align:center;">Carregando logs...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://xjvkyofktqojuyequuxe.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable__w-crANhzjiYKJuh2AX39w_Kz1-Rf74'; 
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // LISTA DE E-MAILS AUTORIZADOS COMO ADMINISTRADOR
+    const EMAILS_ADMIN = [
+      "chico@teste.com" // ALTERE AQUI PARA O SEU E-MAIL DE LOGIN REAL
+    ];
+
+    let listaLogsCache = [];
+
+    window.onload = async () => {
+      const { data: { session } } = await _supabase.auth.getSession();
+      if (!session || !EMAILS_ADMIN.includes(session.user.email)) {
+        alert("Acesso restrito apenas ao administrador.");
+        window.location.href = "index.html";
+        return;
+      }
+      carregarVendas();
+      carregarLogsUsuarios();
+    };
+
+    // ALTERNAR ENTRE AS ABAS
+    function trocarAba(abaId, btn) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      
+      document.getElementById(abaId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // CARREGAR HISTÓRICO DE VENDAS COM O E-MAIL DO CLIENTE
+    async function carregarVendas() {
+      const tbody = document.getElementById('tabela-vendas');
+      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Carregando...</td></tr>';
+
+      // 1. Busca as compras na tabela compras_usuario
+      const { data: compras, error: erroCompras } = await _supabase
+        .from('compras_usuario')
+        .select('*')
+        .order('data_expiracao', { ascending: false })
+        .limit(15);
+
+      if (erroCompras) {
+        console.error(erroCompras);
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#ef4444;">Erro ao carregar vendas.</td></tr>';
+        return;
+      }
+
+      if (!compras || compras.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Nenhuma venda encontrada.</td></tr>';
+        return;
+      }
+
+      // 2. Busca e mapeia os e-mails dos utilizadores através da view
+      const { data: usuarios } = await _supabase
+        .from('vw_usuarios')
+        .select('id, email');
+
+      const mapaEmails = {};
+      if (usuarios) {
+        usuarios.forEach(u => {
+          mapaEmails[u.id] = u.email;
+        });
+      }
+
+      // 3. Monta a tabela exibindo o e-mail
+      tbody.innerHTML = '';
+      compras.forEach(item => {
+        const dataExp = new Date(item.data_expiracao).toLocaleDateString('pt-BR');
+        const emailCliente = mapaEmails[item.user_id] || (item.user_id.substring(0, 8) + '...');
+
+        tbody.innerHTML += `
+          <tr>
+            <td style="font-weight: 500;">${emailCliente}</td>
+            <td><span class="badge">${item.categoria_id}</span></td>
+            <td>${dataExp}</td>
+          </tr>
+        `;
+      });
+    }
+
+    // CARREGAR LOGS DE E-MAILS CADASTRADOS (VW_USUARIOS)
+    async function carregarLogsUsuarios() {
+      const tbody = document.getElementById('tabela-logs');
+      tbody.innerHTML = '<tr><td colspan="2" style="text-align:center;">Buscando registros...</td></tr>';
+
+      const { data, error } = await _supabase
+        .from('vw_usuarios')
+        .select('email, created_at')
+        .order('created_at', { ascending: false })
+        .limit(50);
+
+      if (error) {
+        console.error(error);
+        tbody.innerHTML = '<tr><td colspan="2" style="text-align:center; color:#ef4444;">Erro ao carregar logs. Verifique a view vw_usuarios.</td></tr>';
+        return;
+      }
+
+      listaLogsCache = data || [];
+      renderizarLogs(listaLogsCache);
+    }
+
+    // RENDERIZAR TABELA DE LOGS
+    function renderizarLogs(lista) {
+      const tbody = document.getElementById('tabela-logs');
+      tbody.innerHTML = '';
+
+      if (lista.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="2" style="text-align:center;">Nenhum e-mail encontrado.</td></tr>';
+        return;
+      }
+
+      lista.forEach(item => {
+        const dataCad = new Date(item.created_at).toLocaleDateString('pt-BR') + ' ' + new Date(item.created_at).toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+        tbody.innerHTML += `
+          <tr>
+            <td class="date-text">${dataCad}</td>
+            <td style="font-weight: 500;">${item.email}</td>
+          </tr>
+        `;
+      });
+    }
+
+    // FILTRO DE BUSCA NOS LOGS
+    function filtrarLogs() {
+      const termo = document.getElementById('busca-log').value.toLowerCase();
+      const filtrados = listaLogsCache.filter(item => item.email.toLowerCase().includes(termo));
+      renderizarLogs(filtrados);
+    }
+
+    // LIBERAÇÃO MANUAL
+    async function liberarAcessoManual() {
+      const email = document.getElementById('adm-email').value.trim();
+      const categoria = document.getElementById('adm-categoria').value;
+      const dias = parseInt(document.getElementById('adm-dias').value);
+
+      if (!email) {
+        alert("Digite o e-mail do cliente.");
+        return;
+      }
+
+      const dataExpira = new Date();
+      dataExpira.setDate(dataExpira.getDate() + dias);
+
+      const { data: user, error: userError } = await _supabase
+        .from('vw_usuarios')
+        .select('id')
+        .eq('email', email)
+        .maybeSingle();
+
+      if (userError || !user?.id) {
+        alert("Atenção: O utilizador precisa de estar registado no site com este e-mail.");
+        return;
+      }
+
+      const { error } = await _supabase
+        .from('compras_usuario')
+        .insert([{
+          user_id: user.id,
+          categoria_id: categoria,
+          data_expiracao: dataExpira.toISOString()
+        }]);
+
+      if (error) {
+        alert("Erro ao libertar acesso: " + error.message);
+      } else {
+        alert(`✅ Categoria [${categoria}] libertada com sucesso para ${email}!`);
+        document.getElementById('adm-email').value = '';
+        carregarVendas();
+      }
+    }
+  </script>
+</body>
+</html>

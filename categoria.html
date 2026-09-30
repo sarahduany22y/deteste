@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canal VIP - Galeria</title>
+  
+  <!-- FAVICON INLINE -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%2324a1de%22/><text y=%22.9em%22 x=%2220%22 font-size=%2270%22 fill=%22white%22>🔞</text></svg>">
+  
+  <link rel="stylesheet" href="estilo-telegram.css">
+  <style>
+    .header-page {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 650px;
+      margin: 0 auto 15px;
+      width: 100%;
+    }
+    .header-page h2 {
+      font-size: 1.2rem;
+      color: #64b5ef;
+    }
+    .btn-voltar {
+      color: #fff;
+      text-decoration: none;
+      background: #242f3d;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      border: 1px solid #2b3a4c;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="telegram-feed">
+    <div class="header-page">
+      <h2 id="titulo-categoria">Galeria VIP</h2>
+      <a href="index.html" class="btn-voltar">← Início</a>
+    </div>
+
+    <div id="feed-container" class="telegram-feed"></div>
+    <div id="pagination-controls" class="pagination-container"></div>
+  </main>
+
+  <!-- Importa todas as listas existentes -->
+  <script src="links-amador.js"></script>
+  <script src="links-lives.js"></script>
+  <script src="links-cam.js"></script>
+  <script src="links-hentai.js"></script>
+
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const cat = urlParams.get('cat') || 'amador';
+
+      const banco = {
+        amador: window.linksAmador,
+        lives: window.linksLives,
+        cam: window.linksCam,
+        hentai: window.linksHentai
+      };
+
+      document.getElementById('titulo-categoria').innerText = `Galeria ${cat.toUpperCase()}`;
+      iniciarCategoria(cat, banco[cat] || []);
+    });
+  </script>
+</body>
+</html>
