@@ -344,28 +344,6 @@
       transform: translateZ(0);
     }
 
-    /* ESTILO PARA DESTAQUE DO PLANO DE 90 DIAS */
-    .card.card-featured {
-      border: 2px solid #facc15;
-      box-shadow: 0 0 30px rgba(234, 179, 8, 0.35), 0 12px 30px rgba(0,0,0,0.6);
-    }
-
-    .badge-top-featured {
-      position: absolute;
-      top: 0;
-      right: 0;
-      background: linear-gradient(135deg, #facc15, #eab308);
-      color: #000;
-      font-weight: 900;
-      font-size: 11px;
-      padding: 6px 16px;
-      border-bottom-left-radius: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      z-index: 10;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-
     .card:hover {
       transform: translate3d(0, -4px, 0);
       border-color: rgba(234, 179, 8, 0.6);
@@ -403,17 +381,6 @@
       background: rgba(239, 68, 68, 0.18);
       color: #f87171;
       border: 1px solid rgba(239, 68, 68, 0.45);
-      padding: 4px 11px;
-      border-radius: 8px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-    }
-
-    .plan-badge-gold {
-      background: rgba(234, 179, 8, 0.22);
-      color: #facc15;
-      border: 1px solid rgba(234, 179, 8, 0.6);
       padding: 4px 11px;
       border-radius: 8px;
       font-size: 11px;
@@ -937,9 +904,9 @@
     <!-- HERO BANNER -->
     <div class="hero-banner">
       <span class="badge-promo">🔥 PROMOÇÃO POR TEMPO LIMITADO</span>
-      <h2>GALERIA VIP PRIVADA – AMADOR & VAZADOS EXCLUSIVOS</h2>
+      <h2>GALERIA VIP PRIVADA – 365 DIAS DE AMADOR EXCLUSIVO</h2>
       <p>Vídeos amadores reais, vazados e exclusivos. Sem censura. Sem mensalidade. Acesso imediato.</p>
-      <a href="#card-plano90" class="hero-cta">⚡ LIBERAR PLANO DESTAQUE (90 DIAS) • R$ 14,90</a>
+      <a href="#card-amador" class="hero-cta">⚡ ENTRAR NA GALERIA VIP AGORA – R$ 19,90</a>
     </div>
 
     <!-- VÍDEO DE DEMONSTRAÇÃO -->
@@ -955,50 +922,7 @@
     <!-- LISTA DE CATEGORIAS VIP -->
     <div class="grid">
 
-      <!-- PLANO DESTAQUE: 90 Dias (O MAIS COMPRADO) -->
-      <div class="card card-featured" id="card-plano90">
-        <div class="badge-top-featured">🔥 O MAIS COMPRADO</div>
-        <div class="card-header">
-          <h3>👑 PLANO VIP 90 DIAS 👑</h3>
-          <div class="card-badges">
-            <span class="plan-badge-gold">3 MESES DE ACESSO</span>
-            <span class="status-badge bloqueado" id="badge-plano90">🔒 Bloqueado</span>
-          </div>
-        </div>
-
-        <div class="card-body">
-          <div class="preview-box">
-            <div class="video-item">
-              <iframe src="https://player.mediadelivery.net/embed/756775/f8c68f57-9c99-47ec-ba85-361d76f3c9f7?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
-            </div>
-            <div class="video-item">
-              <iframe src="https://player.mediadelivery.net/embed/756775/7a3351fb-8c11-4c04-9841-dfce33693b73?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
-            </div>
-          </div>
-
-          <div class="vip-description">
-            <p>O plano preferido da comunidade! Liberdade total e custo-benefício imbatível:</p>
-            <ul class="benefits-list">
-              <li><span class="check">✓</span> <b>Acesso VIP Completo por 90 Dias (3 Meses)</b></li>
-              <li><span class="check">✓</span> Vídeos amadores exclusivos, caseiros e flagras reais</li>
-              <li><span class="check">✓</span> Atualizações diárias sem anúncios nem travamentos</li>
-              <li><span class="check">✓</span> Seleção especial TikTok+18, Omegle e mídias sociais</li>
-              <li><span class="check">✓</span> Streaming rápido diretamente do seu Celular, Tablet ou PC</li>
-            </ul>
-          </div>
-
-          <button id="buy-plano90" class="btn-buy" onclick="iniciarCompra('plano90')">⚡ LIBERAR PLANO 90 DIAS • R$ 14,90</button>
-
-          <a href="https://t.me/hksuporte" target="_blank" class="btn-paypal" id="paypal-plano90">
-            🌐 Pay via PayPal / Foreigners (Telegram Support)
-          </a>
-
-          <a href="amador.html" id="access-plano90" class="btn-access" style="display:none;">ENTRAR NA GALERIA (90 DIAS)</a>
-          <div class="texto-seguranca">🔒 Liberação Automática via PIX • Pagamento 100% Discreto</div>
-        </div>
-      </div>
-
-      <!-- Categoria 1: Amador (1 Ano) -->
+      <!-- Categoria 1: Amador -->
       <div class="card" id="card-amador">
         <div class="card-header">
           <h3>⭐ Amador Premium ⭐</h3>
@@ -1095,6 +1019,49 @@
           </a>
 
           <a href="cam.html" id="access-cam" class="btn-access" style="display:none;">ENTRAR NA GALERIA CÂMERAS</a>
+          <div class="texto-seguranca">🔒 Liberação Automática via PIX • Pagamento 100% Discreto</div>
+        </div>
+      </div>
+
+      <!-- Categoria 3: Famosinhas VIP -->
+      <div class="card" id="card-famosinhas">
+        <div class="card-header">
+          <h3>👑 FAMOSINHAS VIP 👑</h3>
+          <div class="card-badges">
+            <span class="plan-badge">ACESSO 1 ANO</span>
+            <span class="status-badge bloqueado" id="badge-famosinhas">🔒 Bloqueado</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="preview-box">
+            <div class="video-item">
+              <iframe src="https://player.mediadelivery.net/embed/756775/97fbfaae-26a9-4674-bf4b-be065dd2fa0d?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
+            </div>
+            <div class="video-item">
+              <iframe src="https://player.mediadelivery.net/embed/756775/a55efaa2-8a90-4824-81ee-ae588ddffba8?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
+            </div>
+          </div>
+
+          <div class="vip-description">
+            <p>O acervo definitivo com as melhores influenciadoras, TikTokers e OnlyFans do momento:</p>
+            <ul class="benefits-list">
+              <li><span class="check">✓</span> <b>Acesso VIP completo por 1 Ano (365 Dias)</b></li>
+              <li><span class="check">✓</span> Vaza das mais famosas do TikTok, Instagram e Privacy</li>
+              <li><span class="check">✓</span> Packs completos e atualizados em alta qualidade (HD/4K)</li>
+              <li><span class="check">✓</span> Conteúdos exclusivos do OnlyFans e Privacy sem tarjas</li>
+              <li><span class="check">✓</span> Novas famosinhas adicionadas todos os dias</li>
+              <li><span class="check">✓</span> Streaming rápido direto no celular ou computador sem travamentos</li>
+            </ul>
+          </div>
+
+          <button id="buy-famosinhas" class="btn-buy" onclick="iniciarCompra('famosinhas')">⚡ LIBERAR ACESSO FAMOSINHAS • R$ 19,92</button>
+
+          <a href="https://t.me/hksuporte" target="_blank" class="btn-paypal" id="paypal-famosinhas">
+            🌐 Pay via PayPal / Foreigners (Telegram Support)
+          </a>
+
+          <a href="famosinhas.html" id="access-famosinhas" class="btn-access" style="display:none;">ENTRAR NA GALERIA FAMOSINHAS</a>
           <div class="texto-seguranca">🔒 Liberação Automática via PIX • Pagamento 100% Discreto</div>
         </div>
       </div>
@@ -1492,9 +1459,9 @@
     let palavrasProibidasBanco = [];
 
     const CHECKOUTS = {
-      plano90: "https://link.syncpayments.com.br/MicvMz", // Mude para o link do plano de 90 dias se for diferente
       amador: "https://link.syncpayments.com.br/MicvMz",
-      cam: "https://link.syncpayments.com.br/SEl2IQ"
+      cam: "https://link.syncpayments.com.br/SEl2IQ",
+      famosinhas: "https://link.syncpayments.com.br/Sl2pMQ"
     };
 
     window.onload = async () => {
@@ -1727,9 +1694,9 @@
         divStatus.innerHTML = `<span style="color: #facc15;">MEMBRO VIP 🟨</span>`;
 
         const nomesFormatados = vipsAtivosLista.map(cat => {
-          if (cat === 'plano90') return '👑 Plano VIP 90 Dias';
           if (cat === 'amador') return '⭐ Amador Premium';
           if (cat === 'cam') return '🔥 Spycam Dark';
+          if (cat === 'famosinhas') return '👑 Famosinhas VIP';
           return cat.toUpperCase();
         });
 
