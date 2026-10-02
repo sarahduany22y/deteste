@@ -14,7 +14,7 @@
     gtag('config', 'G-Q7KTN7GPTN');
   </script>
 
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%2322c55e%22/><text y=%22.9em%22 x=%2220%22 font-size=%2270%22 fill=%22white%22>🔞</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23eab308%22/><text y=%22.9em%22 x=%2220%22 font-size=%2270%22 fill=%22black%22>🔞</text></svg>">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -24,18 +24,33 @@
       --bg-deep: #060910;
       --card-bg: #10161f;
       --card-header: #1a2332;
-      --green-pix: #22c55e;
-      --green-neon: #22c55e;
-      --green-glow: rgba(34, 197, 94, 0.55);
+      --yellow-pix: #eab308;
+      --yellow-neon: #facc15;
+      --yellow-glow: rgba(234, 179, 8, 0.55);
       --red-neon: #ef4444;
-      --yellow-vip: #f59e0b;
       --text-main: #f9fafb;
       --text-sub: #9ca3af;
       --border-color: rgba(255, 255, 255, 0.08);
-      --border-neon: rgba(34, 197, 94, 0.35);
+      --border-neon: rgba(234, 179, 8, 0.35);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Permite seleção apenas nos campos editáveis */
+    input, textarea {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+    }
 
     html, body {
       overflow-x: hidden;
@@ -47,12 +62,34 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg-deep);
       background-image:
-        radial-gradient(circle at 15% 10%, rgba(34, 197, 94, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 15% 10%, rgba(234, 179, 8, 0.08) 0%, transparent 45%),
         radial-gradient(circle at 85% 20%, rgba(239, 68, 68, 0.05) 0%, transparent 40%);
       background-attachment: fixed;
       color: var(--text-main);
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+    }
+
+    /* PROTEÇÃO CONTRA PRINT SCREEN E CAPTURA */
+    @media print {
+      html, body {
+        display: none !important;
+      }
+    }
+
+    #protection-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #060910;
+      z-index: 9999999;
+      justify-content: center;
+      align-items: center;
+      color: #ef4444;
+      font-weight: 900;
+      font-size: 20px;
+      text-align: center;
+      padding: 20px;
     }
 
     /* ===== PARTÍCULAS (SOMENTE DESKTOP) ===== */
@@ -69,7 +106,7 @@
       width: 3px;
       height: 3px;
       border-radius: 50%;
-      background: var(--green-neon);
+      background: var(--yellow-neon);
       opacity: 0;
       animation: floatUp linear infinite;
       will-change: transform, opacity;
@@ -110,14 +147,14 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #22c55e, #10b981);
+      background: linear-gradient(135deg, #eab308, #ca8a04);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 16px;
       font-weight: 800;
-      color: #fff;
-      box-shadow: 0 0 14px rgba(34, 197, 94, 0.5);
+      color: #000;
+      box-shadow: 0 0 14px rgba(234, 179, 8, 0.5);
     }
 
     .channel-details h1 {
@@ -129,7 +166,7 @@
     }
 
     .verified-badge {
-      color: var(--green-pix);
+      color: var(--yellow-pix);
       font-size: 15px;
     }
 
@@ -139,7 +176,7 @@
     }
 
     .auth-btn {
-      background: rgba(34, 197, 94, 0.10);
+      background: rgba(234, 179, 8, 0.10);
       color: #fff;
       border: 1px solid var(--border-neon);
       padding: 8px 16px;
@@ -149,7 +186,7 @@
       cursor: pointer;
       transition: background 0.2s ease;
     }
-    .auth-btn:hover { background: rgba(34, 197, 94, 0.22); }
+    .auth-btn:hover { background: rgba(234, 179, 8, 0.22); }
 
     .user-profile-trigger {
       display: inline-flex;
@@ -165,7 +202,7 @@
       transition: background 0.2s ease;
     }
     .user-profile-trigger:hover {
-      background: rgba(34, 197, 94, 0.15);
+      background: rgba(234, 179, 8, 0.15);
     }
 
     /* ===== CONTAINER ===== */
@@ -181,22 +218,22 @@
     .hero-banner {
       position: relative;
       background:
-        linear-gradient(180deg, rgba(34, 197, 94, 0.16) 0%, rgba(10, 15, 26, 0.85) 100%),
-        radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.18) 0%, transparent 60%);
+        linear-gradient(180deg, rgba(234, 179, 8, 0.16) 0%, rgba(10, 15, 26, 0.85) 100%),
+        radial-gradient(circle at 50% 0%, rgba(234, 179, 8, 0.18) 0%, transparent 60%);
       border: 1px solid var(--border-neon);
       border-radius: 22px;
       padding: 36px 22px 30px;
       margin-bottom: 28px;
       text-align: center;
       overflow: hidden;
-      box-shadow: 0 0 30px rgba(34, 197, 94, 0.12), 0 16px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 30px rgba(234, 179, 8, 0.12), 0 16px 40px rgba(0, 0, 0, 0.4);
     }
 
     .badge-promo {
       display: inline-block;
-      background: rgba(34, 197, 94, 0.18);
-      color: #4ade80;
-      border: 1px solid rgba(34, 197, 94, 0.55);
+      background: rgba(234, 179, 8, 0.18);
+      color: #facc15;
+      border: 1px solid rgba(234, 179, 8, 0.55);
       font-size: 11px;
       font-weight: 800;
       padding: 5px 16px;
@@ -213,7 +250,7 @@
       margin-bottom: 12px;
       line-height: 1.25;
       letter-spacing: -0.5px;
-      text-shadow: 0 0 18px rgba(34, 197, 94, 0.4);
+      text-shadow: 0 0 18px rgba(234, 179, 8, 0.4);
     }
 
     .hero-banner p {
@@ -229,8 +266,8 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-      color: #ffffff;
+      background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+      color: #000000;
       border: none;
       padding: 16px 32px;
       border-radius: 14px;
@@ -239,14 +276,14 @@
       cursor: pointer;
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      box-shadow: 0 0 22px rgba(34, 197, 94, 0.45), 0 8px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 22px rgba(234, 179, 8, 0.45), 0 8px 20px rgba(0, 0, 0, 0.4);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       text-decoration: none;
       transform: translateZ(0);
     }
     .hero-cta:hover {
       transform: translate3d(0, -3px, 0);
-      box-shadow: 0 0 38px rgba(34, 197, 94, 0.75), 0 10px 24px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 38px rgba(234, 179, 8, 0.75), 0 10px 24px rgba(0, 0, 0, 0.5);
     }
 
     /* ===== DEMO ===== */
@@ -307,10 +344,32 @@
       transform: translateZ(0);
     }
 
+    /* ESTILO PARA DESTAQUE DO PLANO DE 90 DIAS */
+    .card.card-featured {
+      border: 2px solid #facc15;
+      box-shadow: 0 0 30px rgba(234, 179, 8, 0.35), 0 12px 30px rgba(0,0,0,0.6);
+    }
+
+    .badge-top-featured {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: linear-gradient(135deg, #facc15, #eab308);
+      color: #000;
+      font-weight: 900;
+      font-size: 11px;
+      padding: 6px 16px;
+      border-bottom-left-radius: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
     .card:hover {
       transform: translate3d(0, -4px, 0);
-      border-color: rgba(34, 197, 94, 0.6);
-      box-shadow: 0 0 40px rgba(34, 197, 94, 0.25), 0 16px 40px rgba(0,0,0,0.5);
+      border-color: rgba(234, 179, 8, 0.6);
+      box-shadow: 0 0 40px rgba(234, 179, 8, 0.25), 0 16px 40px rgba(0,0,0,0.5);
     }
 
     .card-header {
@@ -351,6 +410,17 @@
       letter-spacing: 0.5px;
     }
 
+    .plan-badge-gold {
+      background: rgba(234, 179, 8, 0.22);
+      color: #facc15;
+      border: 1px solid rgba(234, 179, 8, 0.6);
+      padding: 4px 11px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
     .status-badge {
       padding: 4px 12px;
       border-radius: 8px;
@@ -365,9 +435,9 @@
       border: 1px solid rgba(255,255,255,0.08);
     }
     .liberado {
-      background: var(--green-pix);
-      color: #fff;
-      box-shadow: 0 0 14px rgba(34, 197, 94, 0.55);
+      background: var(--yellow-pix);
+      color: #000;
+      box-shadow: 0 0 14px rgba(234, 179, 8, 0.55);
     }
 
     .card-body { padding: 20px; }
@@ -389,13 +459,13 @@
       background: #111;
       border-radius: 12px;
       overflow: hidden;
-      border: 1px solid rgba(34, 197, 94, 0.25);
+      border: 1px solid rgba(234, 179, 8, 0.25);
       transition: transform 0.3s ease, border-color 0.3s ease;
       transform: translateZ(0);
     }
     .video-item:hover {
       transform: scale(1.02);
-      border-color: rgba(34, 197, 94, 0.8);
+      border-color: rgba(234, 179, 8, 0.8);
     }
 
     .preview-box iframe {
@@ -433,7 +503,7 @@
     }
 
     .benefits-list li span.check {
-      color: var(--green-pix);
+      color: var(--yellow-pix);
       font-weight: 900;
       flex-shrink: 0;
     }
@@ -445,8 +515,8 @@
       justify-content: center;
       gap: 8px;
       width: 100%;
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-      color: #ffffff;
+      background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+      color: #000000;
       border: none;
       padding: 16px 20px;
       border-radius: 13px;
@@ -456,13 +526,13 @@
       cursor: pointer;
       text-transform: uppercase;
       letter-spacing: 0.6px;
-      box-shadow: 0 0 20px rgba(34, 197, 94, 0.4), 0 6px 18px rgba(0,0,0,0.4);
+      box-shadow: 0 0 20px rgba(234, 179, 8, 0.4), 0 6px 18px rgba(0,0,0,0.4);
       transition: transform 0.2s ease, box-shadow 0.25s ease;
       transform: translateZ(0);
     }
     .btn-buy:hover {
       transform: translate3d(0, -2px, 0);
-      box-shadow: 0 0 34px rgba(34, 197, 94, 0.75), 0 10px 24px rgba(0,0,0,0.5);
+      box-shadow: 0 0 34px rgba(234, 179, 8, 0.75), 0 10px 24px rgba(0,0,0,0.5);
     }
 
     .btn-paypal {
@@ -491,8 +561,8 @@
     .btn-access {
       display: block;
       width: 100%;
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-      color: #fff;
+      background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+      color: #000;
       text-decoration: none;
       padding: 16px;
       border-radius: 13px;
@@ -501,7 +571,7 @@
       font-size: 15px;
       text-transform: uppercase;
       letter-spacing: 0.6px;
-      box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+      box-shadow: 0 0 20px rgba(234, 179, 8, 0.5);
       transition: transform 0.2s ease;
     }
     .btn-access:hover { transform: translate3d(0, -2px, 0); }
@@ -519,7 +589,7 @@
 
     /* ===== TAGS CHAT ===== */
     .tag-vip-amarela {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
+      background: linear-gradient(135deg, #facc15, #ca8a04);
       color: #000;
       font-weight: 900;
       font-size: 10px;
@@ -590,14 +660,14 @@
 
     .review-item {
       background: #060910;
-      border: 1px solid rgba(34, 197, 94, 0.18);
+      border: 1px solid rgba(234, 179, 8, 0.18);
       border-radius: 14px;
       padding: 14px 16px;
       transition: transform 0.25s ease, border-color 0.25s ease;
     }
     .review-item:hover {
       transform: translate3d(0, -2px, 0);
-      border-color: rgba(34, 197, 94, 0.5);
+      border-color: rgba(234, 179, 8, 0.5);
     }
 
     .review-header {
@@ -614,7 +684,7 @@
     }
 
     .review-stars {
-      color: #f59e0b;
+      color: #facc15;
       font-size: 12px;
     }
 
@@ -650,10 +720,10 @@
     }
 
     .footer-link {
-      color: #4ade80;
+      color: #facc15;
       text-decoration: underline;
     }
-    .footer-link:hover { color: #22c55e; }
+    .footer-link:hover { color: #eab308; }
 
     .footer-keywords {
       font-size: 11px;
@@ -682,7 +752,7 @@
       max-width: 420px;
       text-align: center;
       border: 1px solid var(--border-neon);
-      box-shadow: 0 0 35px rgba(34, 197, 94, 0.2), 0 20px 50px rgba(0,0,0,0.7);
+      box-shadow: 0 0 35px rgba(234, 179, 8, 0.2), 0 20px 50px rgba(0,0,0,0.7);
     }
 
     .modal h3 {
@@ -710,7 +780,7 @@
 
     .modal input:focus, .modal select:focus {
       outline: none;
-      border-color: var(--green-pix);
+      border-color: var(--yellow-pix);
     }
 
     .modal-foto-fullscreen {
@@ -775,6 +845,11 @@
 </head>
 <body>
 
+  <!-- TELA DE PROTEÇÃO (CAPTURA) -->
+  <div id="protection-overlay">
+    ⚠️ CAPTURA OU PRINT SCREEN DESATIVADO NESTA PÁGINA ⚠️
+  </div>
+
   <!-- PARTÍCULAS -->
   <div class="particles-bg" id="particlesBg"></div>
 
@@ -811,8 +886,8 @@
       </p>
       <div style="display: flex; gap: 10px; justify-content: center;">
         <button id="btn-pop-sim" style="
-          background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-          color: #ffffff;
+          background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+          color: #000000;
           border: none;
           padding: 14px;
           border-radius: 12px;
@@ -820,7 +895,7 @@
           font-size: 13px;
           cursor: pointer;
           flex: 1;
-          box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+          box-shadow: 0 0 20px rgba(234, 179, 8, 0.5);
         ">
           SIM, SOU MAIOR
         </button>
@@ -862,9 +937,9 @@
     <!-- HERO BANNER -->
     <div class="hero-banner">
       <span class="badge-promo">🔥 PROMOÇÃO POR TEMPO LIMITADO</span>
-      <h2>GALERIA VIP PRIVADA – 365 DIAS DE AMADOR EXCLUSIVO</h2>
+      <h2>GALERIA VIP PRIVADA – AMADOR & VAZADOS EXCLUSIVOS</h2>
       <p>Vídeos amadores reais, vazados e exclusivos. Sem censura. Sem mensalidade. Acesso imediato.</p>
-      <a href="#card-amador" class="hero-cta">⚡ ENTRAR NA GALERIA VIP AGORA – R$ 19,90</a>
+      <a href="#card-plano90" class="hero-cta">⚡ LIBERAR PLANO DESTAQUE (90 DIAS) • R$ 14,90</a>
     </div>
 
     <!-- VÍDEO DE DEMONSTRAÇÃO -->
@@ -880,7 +955,50 @@
     <!-- LISTA DE CATEGORIAS VIP -->
     <div class="grid">
 
-      <!-- Categoria 1: Amador -->
+      <!-- PLANO DESTAQUE: 90 Dias (O MAIS COMPRADO) -->
+      <div class="card card-featured" id="card-plano90">
+        <div class="badge-top-featured">🔥 O MAIS COMPRADO</div>
+        <div class="card-header">
+          <h3>👑 PLANO VIP 90 DIAS 👑</h3>
+          <div class="card-badges">
+            <span class="plan-badge-gold">3 MESES DE ACESSO</span>
+            <span class="status-badge bloqueado" id="badge-plano90">🔒 Bloqueado</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="preview-box">
+            <div class="video-item">
+              <iframe src="https://player.mediadelivery.net/embed/756775/f8c68f57-9c99-47ec-ba85-361d76f3c9f7?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
+            </div>
+            <div class="video-item">
+              <iframe src="https://player.mediadelivery.net/embed/756775/7a3351fb-8c11-4c04-9841-dfce33693b73?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
+            </div>
+          </div>
+
+          <div class="vip-description">
+            <p>O plano preferido da comunidade! Liberdade total e custo-benefício imbatível:</p>
+            <ul class="benefits-list">
+              <li><span class="check">✓</span> <b>Acesso VIP Completo por 90 Dias (3 Meses)</b></li>
+              <li><span class="check">✓</span> Vídeos amadores exclusivos, caseiros e flagras reais</li>
+              <li><span class="check">✓</span> Atualizações diárias sem anúncios nem travamentos</li>
+              <li><span class="check">✓</span> Seleção especial TikTok+18, Omegle e mídias sociais</li>
+              <li><span class="check">✓</span> Streaming rápido diretamente do seu Celular, Tablet ou PC</li>
+            </ul>
+          </div>
+
+          <button id="buy-plano90" class="btn-buy" onclick="iniciarCompra('plano90')">⚡ LIBERAR PLANO 90 DIAS • R$ 14,90</button>
+
+          <a href="https://t.me/hksuporte" target="_blank" class="btn-paypal" id="paypal-plano90">
+            🌐 Pay via PayPal / Foreigners (Telegram Support)
+          </a>
+
+          <a href="amador.html" id="access-plano90" class="btn-access" style="display:none;">ENTRAR NA GALERIA (90 DIAS)</a>
+          <div class="texto-seguranca">🔒 Liberação Automática via PIX • Pagamento 100% Discreto</div>
+        </div>
+      </div>
+
+      <!-- Categoria 1: Amador (1 Ano) -->
       <div class="card" id="card-amador">
         <div class="card-header">
           <h3>⭐ Amador Premium ⭐</h3>
@@ -941,10 +1059,10 @@
         <div class="card-body">
           <div class="preview-box">
             <div class="video-item">
-              <iframe src="https://player.mediadelivery.net/play/756775/0e10ec0b-c077-4f2c-ad18-efa0d1033fb5?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
+              <iframe src="https://player.mediadelivery.net/embed/756775/f0d20e79-73dd-4cac-83a6-68cfee459b41?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
             </div>
             <div class="video-item">
-              <iframe src="https://player.mediadelivery.net/play/756775/c3a254f4-71ae-4208-9f23-3ed67f425969?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
+              <iframe src="https://player.mediadelivery.net/embed/756775/2ddbb872-7db1-4b9f-9106-15aa573c0219?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
             </div>
           </div>
 
@@ -954,6 +1072,8 @@
               <li><span class="check">✓</span> <b>Acesso VIP completo por 1 Ano (365 Dias)</b></li>
               <li><span class="check">✓</span> Câmeras escondidas e flagras reais</li>
               <li><span class="check">✓</span> flagras reais / CASAL</li>
+              <li><span class="check">✓</span> +50 Videos do QUARTO DA BRUNA</li>
+              <li><span class="check">✓</span> QUARTO DO NETO</li>
               <li><span class="check">✓</span> Câmeras escondidas / RESIDENCIAs</li>
               <li><span class="check">✓</span> Câmeras escondidas BANHEIROS</li>
               <li><span class="check">✓</span> FLAGRAS REAIS</li>
@@ -979,47 +1099,6 @@
         </div>
       </div>
 
-      <!-- Categoria 3: Hentai -->
-      <div class="card" id="card-hentai">
-        <div class="card-header">
-          <h3>✨ Hentai VIP HD ✨</h3>
-          <div class="card-badges">
-            <span class="plan-badge">ACESSO 1 ANO</span>
-            <span class="status-badge bloqueado" id="badge-hentai">🔒 Bloqueado</span>
-          </div>
-        </div>
-
-        <div class="card-body">
-          <div class="preview-box">
-            <div class="video-item">
-              <iframe src="https://player.mediadelivery.net/play/756775/e78ccd2b-ce35-411e-9d57-cafbfc203900?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
-            </div>
-            <div class="video-item">
-              <iframe src="https://player.mediadelivery.net/play/756775/5a75114e-38de-4834-8390-b7a30994398c?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
-            </div>
-          </div>
-
-          <div class="vip-description">
-            <p>Galeria completa de animações HD e 3D:</p>
-            <ul class="benefits-list">
-              <li><span class="check">✓</span> <b>Acesso VIP completo por 1 Ano (365 Dias)</b></li>
-              <li><span class="check">✓</span> Animações adultas em Ultra HD / 4K</li>
-              <li><span class="check">✓</span> Milhares de vídeos e videos completos</li>
-              <li><span class="check">✓</span> Servidor próprio super rápido</li>
-            </ul>
-          </div>
-
-          <button id="buy-hentai" class="btn-buy" onclick="iniciarCompra('hentai')">⚡ LIBERAR ACESSO HENTAI • R$ 11,90</button>
-
-          <a href="https://t.me/hksuporte" target="_blank" class="btn-paypal" id="paypal-hentai">
-            🌐 Pay via PayPal / Foreigners (Telegram Support)
-          </a>
-
-          <a href="hentai.html" id="access-hentai" class="btn-access" style="display:none;">ENTRAR NA GALERIA HENTAI</a>
-          <div class="texto-seguranca">🔒 Liberação Automática via PIX • Pagamento 100% Discreto</div>
-        </div>
-      </div>
-
     </div>
 
     <!-- CHAT -->
@@ -1040,7 +1119,7 @@
         border-bottom: 1px solid var(--border-neon);
       ">
         <h3 style="font-size: 16px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; margin: 0;">
-          💬 Chat Aberto 🟢
+          💬 Chat Aberto 🟡
         </h3>
         <div style="display: flex; gap: 8px;">
           <button id="btn-painel-adm" onclick="abrirModalAdmin()" style="
@@ -1055,8 +1134,8 @@
             cursor: pointer;
           ">Painel ADM ⚙️</button>
           <button onclick="alterarNomeChat()" style="
-            background: rgba(34, 197, 94, 0.10);
-            color: #4ade80;
+            background: rgba(234, 179, 8, 0.10);
+            color: #facc15;
             border: 1px solid var(--border-neon);
             padding: 6px 14px;
             border-radius: 8px;
@@ -1152,7 +1231,7 @@
         <b>Aviso Legal:</b> Este site não hospeda nem armazena nenhum arquivo de vídeo em seus próprios servidores. Todo o conteúdo exibido é incorporado através de players de terceiros cadastrados no sistema. Dúvidas ou suporte? Fale conosco via Telegram: <a href="https://t.me/hksuporte" target="_blank" class="footer-link">@hksuporte</a>.
       </div>
       <div class="footer-keywords">
-        Termos mais buscados: videos amadores vazados, spycam dark, flagras reais motel, vip de amadores, famosinhas vip, Porno+18, telegram vip vazados, videos caseiros hd, VIP Amadores, Hidden Cam Teen (+18), hentai 3d 4k, galeria privada +18, CAMERAS ESCONDIDAS / HIDDEN CAMERAS (+18), Voyeur.
+        Termos mais buscados: videos amadores vazados, spycam dark, flagras reais motel, vip de amadores, famosinhas vip, Porno+18, telegram vip vazados, videos caseiros hd, VIP Amadores, Hidden Cam Teen (+18), galeria privada +18, CAMERAS ESCONDIDAS / HIDDEN CAMERAS (+18), Voyeur.
       </div>
     </div>
   </footer>
@@ -1177,7 +1256,7 @@
 
       <div style="background: #060910; border: 1px solid var(--border-neon); padding: 14px; border-radius: 12px; margin-bottom: 16px;">
         <div style="font-size: 12px; color: var(--text-sub); margin-bottom: 4px;">Apelido no Chat:</div>
-        <div id="perfil-apelido" style="font-size: 14px; font-weight: bold; color: #4ade80; margin-bottom: 10px;">-</div>
+        <div id="perfil-apelido" style="font-size: 14px; font-weight: bold; color: #facc15; margin-bottom: 10px;">-</div>
 
         <div style="font-size: 12px; color: var(--text-sub); margin-bottom: 4px;">E-mail da Conta:</div>
         <div id="perfil-email" style="font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 10px; word-break: break-all;">-</div>
@@ -1214,7 +1293,7 @@
         <h4 style="font-size:13px; color:#fff; margin-bottom:8px;">🚫 Adicionar Palavra Proibida</h4>
         <div style="display:flex; gap:6px; margin-bottom:10px;">
           <input type="text" id="inputPalavraProibida" placeholder="Ex: golpe, pessimo, etc." style="flex:1; padding:8px; background:#10161f; border:1px solid var(--border-neon); color:#fff; border-radius:8px; font-size:12px;" />
-          <button onclick="adicionarPalavraProibida()" style="background:linear-gradient(135deg,#22c55e,#16a34a); color:#fff; border:none; padding:8px 14px; border-radius:8px; font-weight:bold; font-size:12px; cursor:pointer;">Add</button>
+          <button onclick="adicionarPalavraProibida()" style="background:linear-gradient(135deg,#facc15,#eab308); color:#000; border:none; padding:8px 14px; border-radius:8px; font-weight:bold; font-size:12px; cursor:pointer;">Add</button>
         </div>
         <div id="listaPalavrasProibidas" style="display:flex; flex-wrap:wrap; gap:6px; max-height:80px; overflow-y:auto;">
           <span style="font-size:11px; color:var(--text-sub);">Carregando termos...</span>
@@ -1268,7 +1347,65 @@
 
   <script src="links-cam.js"></script>
 
+  <!-- PROTEÇÃO DE PRINT E ATALHOS DE TECLADO -->
   <script>
+    // Bloqueia o clique direito
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // Bloqueia atalhos de captura e inspeção
+    document.addEventListener('keydown', function (e) {
+      if (
+        e.key === 'PrintScreen' ||
+        e.keyCode === 44 ||
+        (e.ctrlKey && e.key === 'p') ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+        (e.ctrlKey && (e.key === 'u' || e.key === 'U')) ||
+        e.key === 'F12'
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText('');
+        }
+        exibirOverlayProtecao();
+        return false;
+      }
+    });
+
+    // Limpa a área de transferência caso aperte PrintScreen
+    document.addEventListener('keyup', function (e) {
+      if (e.key === 'PrintScreen' || e.keyCode === 44) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText('');
+        }
+        exibirOverlayProtecao();
+      }
+    });
+
+    // Oculta tela se perder o foco (ex: gravadores / printscreen externos)
+    window.addEventListener('blur', function() {
+      document.body.style.filter = 'blur(15px)';
+    });
+    window.addEventListener('focus', function() {
+      document.body.style.filter = 'none';
+      ocultarOverlayProtecao();
+    });
+
+    function exibirOverlayProtecao() {
+      const overlay = document.getElementById('protection-overlay');
+      if (overlay) {
+        overlay.style.display = 'flex';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 2000);
+      }
+    }
+
+    function ocultarOverlayProtecao() {
+      const overlay = document.getElementById('protection-overlay');
+      if (overlay) overlay.style.display = 'none';
+    }
+
     document.addEventListener('click', function (e) {
       if (e.target && e.target.matches('.photo-wrapper img')) {
         const modal = document.getElementById('modalFotoFullscreen');
@@ -1324,7 +1461,7 @@
         p.style.animationDuration = (12 + Math.random() * 12) + 's';
         p.style.animationDelay = (Math.random() * 12) + 's';
         p.style.width = p.style.height = (2 + Math.random() * 2) + 'px';
-        const cores = ['#22c55e', '#4ade80'];
+        const cores = ['#eab308', '#facc15'];
         const cor = cores[Math.floor(Math.random() * cores.length)];
         p.style.background = cor;
         fragment.appendChild(p);
@@ -1355,9 +1492,9 @@
     let palavrasProibidasBanco = [];
 
     const CHECKOUTS = {
+      plano90: "https://link.syncpayments.com.br/MicvMz", // Mude para o link do plano de 90 dias se for diferente
       amador: "https://link.syncpayments.com.br/MicvMz",
-      cam: "https://link.syncpayments.com.br/SEl2IQ",
-      hentai: "https://link.syncpayments.com.br/cG8rFc"
+      cam: "https://link.syncpayments.com.br/SEl2IQ"
     };
 
     window.onload = async () => {
@@ -1467,7 +1604,7 @@
         const status = item.expira_em ? `Restrito até: ${new Date(item.expira_em).toLocaleDateString()}` : 'Banido Permanente';
         div.innerHTML = `
           <span>ID: <b>${item.user_id.substring(0,8)}...</b> (${status})</span>
-          <button onclick="removerBanimento(${item.id})" style="background:linear-gradient(135deg,#22c55e,#16a34a); color:#fff; border:none; padding:2px 8px; border-radius:6px; cursor:pointer; font-weight:bold;">Desbanir</button>
+          <button onclick="removerBanimento(${item.id})" style="background:linear-gradient(135deg,#facc15,#eab308); color:#000; border:none; padding:2px 8px; border-radius:6px; cursor:pointer; font-weight:bold;">Desbanir</button>
         `;
         container.appendChild(div);
       });
@@ -1587,12 +1724,12 @@
         divStatus.innerHTML = `<span style="color: #ef4444;">ADMINISTRADOR 🔴</span>`;
         divVips.innerHTML = `<b>Acessos:</b> Controle total e moderação do sistema.`;
       } else if (usuarioPossuiVip) {
-        divStatus.innerHTML = `<span style="color: #f59e0b;">MEMBRO VIP 🟨</span>`;
+        divStatus.innerHTML = `<span style="color: #facc15;">MEMBRO VIP 🟨</span>`;
 
         const nomesFormatados = vipsAtivosLista.map(cat => {
+          if (cat === 'plano90') return '👑 Plano VIP 90 Dias';
           if (cat === 'amador') return '⭐ Amador Premium';
           if (cat === 'cam') return '🔥 Spycam Dark';
-          if (cat === 'hentai') return '✨ Hentai HD';
           return cat.toUpperCase();
         });
 
@@ -1889,14 +2026,14 @@
       div.id = `msg-item-${msgId}`;
       div.style.cssText = `
         background: #060910;
-        border: 1px solid rgba(34, 197, 94, 0.18);
+        border: 1px solid rgba(234, 179, 8, 0.18);
         padding: 9px 13px;
         border-radius: 11px;
         font-size: 13px;
         line-height: 1.45;
         word-break: break-word;
       `;
-      div.innerHTML = `${botoesAcao}<b style="color: #4ade80;">${escaparHTML(nome)}</b>${seloTag}: <span style="color: #e5e7eb;">${escaparHTML(texto)}</span>`;
+      div.innerHTML = `${botoesAcao}<b style="color: #facc15;">${escaparHTML(nome)}</b>${seloTag}: <span style="color: #e5e7eb;">${escaparHTML(texto)}</span>`;
       box.appendChild(div);
     }
 
@@ -2068,7 +2205,7 @@
         item.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:#10161f; padding:7px; border-radius:8px; font-size:11px;';
         item.innerHTML = `
           <div>
-            <b style="color:var(--green-pix);">${escaparHTML(m.nome_exibicao)}:</b>
+            <b style="color:var(--yellow-pix);">${escaparHTML(m.nome_exibicao)}:</b>
             <span style="color:#fff;">${escaparHTML(m.mensagem)}</span>
           </div>
           <div style="display:flex; gap:4px;">
