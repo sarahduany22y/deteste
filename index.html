@@ -257,66 +257,6 @@
       box-shadow: 0 0 38px rgba(234, 179, 8, 0.75), 0 10px 24px rgba(0, 0, 0, 0.5);
     }
 
-    /* CARD OFERTA PROMO COMBO LEVE 2 PAGUE 1 */
-    .card-combo-promo {
-      background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(16, 22, 31, 0.95) 100%);
-      border: 2px solid var(--yellow-neon);
-      border-radius: 22px;
-      padding: 22px;
-      margin-bottom: 28px;
-      box-shadow: 0 0 30px rgba(234, 179, 8, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-    .combo-tag-top {
-      position: absolute;
-      top: 0; right: 0;
-      background: #ef4444;
-      color: #fff;
-      font-weight: 900;
-      font-size: 11px;
-      padding: 6px 16px;
-      border-bottom-left-radius: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .combo-header {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 14px;
-    }
-    .combo-header h3 {
-      font-size: 20px;
-      font-weight: 900;
-      color: #fff;
-    }
-    .combo-price-box {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      margin: 12px 0;
-    }
-    .combo-price-de {
-      font-size: 14px;
-      color: var(--text-sub);
-      text-decoration: line-through;
-    }
-    .combo-price-por {
-      font-size: 24px;
-      font-weight: 900;
-      color: #facc15;
-    }
-    .combo-badge-discount {
-      background: rgba(34, 197, 94, 0.2);
-      color: #4ade80;
-      border: 1px solid rgba(34, 197, 94, 0.4);
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
     /* DEMO */
     .demo-section {
       background: var(--card-bg);
@@ -357,7 +297,7 @@
       border: none;
     }
 
-    /* GRID */
+    /* GRID DE CARDS */
     .grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -373,6 +313,11 @@
       box-shadow: 0 12px 30px rgba(0,0,0,0.45);
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       transform: translateZ(0);
+    }
+
+    .card-promo-dupla {
+      border: 2px solid var(--yellow-neon);
+      box-shadow: 0 0 30px rgba(234, 179, 8, 0.3), 0 12px 30px rgba(0,0,0,0.45);
     }
 
     .card:hover {
@@ -504,6 +449,33 @@
       color: var(--yellow-pix);
       font-weight: 900;
       flex-shrink: 0;
+    }
+
+    /* PREÇO COMBO */
+    .combo-price-box {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .combo-price-de {
+      font-size: 14px;
+      color: var(--text-sub);
+      text-decoration: line-through;
+    }
+    .combo-price-por {
+      font-size: 24px;
+      font-weight: 900;
+      color: #facc15;
+    }
+    .combo-badge-discount {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
     }
 
     /* BOTÕES */
@@ -946,33 +918,7 @@
       <span class="badge-promo">🔥 PROMOÇÃO POR TEMPO LIMITADO</span>
       <h2>GALERIA VIP PRIVADA – ACESSO A CONTEÚDOS EXCLUSIVOS</h2>
       <p>Vídeos amadores reais, vazados e exclusivos. Sem censura. Sem mensalidade. Acesso imediato.</p>
-      <a href="#card-combo-promo" class="hero-cta">⚡ APROVEITAR OFERTA LEVE 2 PAGUE 1 (30 DIAS)</a>
-    </div>
-
-    <!-- SEÇÃO EXCLUSIVA DE COMBO / PROMOÇÃO LEVE 2 PAGUE 1 -->
-    <div class="card-combo-promo" id="card-combo-promo">
-      <div class="combo-tag-top">💥 OFERTA DUPLA EXCLUSIVA</div>
-      <div class="combo-header">
-        <h3>🔥 COMBO VIP TOTAL: AMADOR + SPYCAM DARK</h3>
-        <p style="font-size: 13px; color: #d1d5db;">Libere o acesso completo a <b>AMBAS</b> as galerias VIP por 30 dias com desconto especial!</p>
-      </div>
-
-      <ul class="benefits-list" style="margin-bottom: 16px;">
-        <li><span class="check">✓</span> <b>Acesso ilimitado à Galeria Amador Premium (30 Dias)</b></li>
-        <li><span class="check">✓</span> <b>Acesso ilimitado à Galeria Spycam VIP Dark (30 Dias)</b></li>
-        <li><span class="check">✓</span> Economize instantaneamente no pacote promocional</li>
-      </ul>
-
-      <div class="combo-price-box">
-        <span class="combo-price-de">De R$ 39,80</span>
-        <span class="combo-price-por">Por R$ 29,65</span>
-        <span class="combo-badge-discount">ECONOMIA DE R$ 10,15</span>
-      </div>
-
-      <button id="buy-promo-30" class="btn-buy btn-buy-promo" onclick="iniciarCompra('promo_30')">
-        🚀 QUERO LEVAR OS 2 VIPs POR R$ 29,65 (30 DIAS)
-      </button>
-      <div class="texto-seguranca" style="margin-top: 10px;">⚡ Ativação Imediata via PIX • Liberado na hora no seu e-mail</div>
+      <a href="#card-promo-dupla" class="hero-cta">⚡ APROVEITAR OFERTA LEVE 2 PAGUE 1 (30 DIAS)</a>
     </div>
 
     <!-- VÍDEO DE DEMONSTRAÇÃO -->
@@ -985,10 +931,10 @@
       </div>
     </div>
 
-    <!-- LISTA DE CATEGORIAS VIP -->
+    <!-- LISTA DE PLANOS / OFERTAS VIP -->
     <div class="grid">
 
-      <!-- Categoria 1: Amador -->
+      <!-- 1. VIP AMADOR -->
       <div class="card" id="card-amador">
         <div class="card-header">
           <h3>⭐ Amador Premium ⭐</h3>
@@ -1039,7 +985,49 @@
         </div>
       </div>
 
-      <!-- Categoria 2: Cam -->
+      <!-- 2. PROMOÇÃO DUPLA (POSICIONADA ENTRE AMADOR E CAM) -->
+      <div class="card card-promo-dupla" id="card-promo-dupla">
+        <div class="card-header" style="background: linear-gradient(180deg, rgba(234, 179, 8, 0.2) 0%, #131a24 100%);">
+          <h3>💥 PROMOÇÃO DUPLA • LEVE 2 PAGUE 1 (30 DIAS) 💥</h3>
+          <div class="card-badges">
+            <span class="plan-badge" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border-color: rgba(34, 197, 94, 0.4);">OFERTA ESPECIAL</span>
+            <span class="status-badge bloqueado" id="badge-promo_30">🔒 Bloqueado</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="vip-description">
+            <p>Garanta acesso total e simultâneo às 2 Galerias VIPs pelo preço de apenas 1:</p>
+            <ul class="benefits-list">
+              <li><span class="check">✓</span> <b>Acesso ilimitado à Galeria Amador Premium (30 Dias)</b></li>
+              <li><span class="check">✓</span> <b>Acesso ilimitado à Galeria Spycam VIP Dark (30 Dias)</b></li>
+              <li><span class="check">✓</span> Economize instantaneamente no pacote duplo promocional</li>
+              <li><span class="check">✓</span> Assista online conteúdos amadores vazados, flagras e câmeras escondidas</li>
+              <li><span class="check">✓</span> Atualizações diárias em ambos os VIPs com streaming rápido</li>
+            </ul>
+          </div>
+
+          <div class="combo-price-box">
+            <span class="combo-price-de">De R$ 39,80</span>
+            <span class="combo-price-por">Por R$ 29,65</span>
+            <span class="combo-badge-discount">LEVE 2 PAGUE 1</span>
+          </div>
+
+          <div class="plan-actions" id="actions-promo_30">
+            <button id="buy-promo-30" class="btn-buy btn-buy-promo" onclick="iniciarCompra('promo_30')">
+              🚀 APROVEITAR PROMOÇÃO DUPLA (R$ 29,65)
+            </button>
+            <a href="https://t.me/hksuporte" target="_blank" class="btn-paypal" id="paypal-promo">
+              🌐 Pay via PayPal / Foreigners (Telegram Support)
+            </a>
+          </div>
+
+          <a href="amador.html" id="access-promo_30" class="btn-access" style="display:none;">ACESSAR TODAS AS GALERIAS VIP</a>
+          <div class="texto-seguranca">🔒 Liberação Automática via PIX • Pagamento 100% Discreto</div>
+        </div>
+      </div>
+
+      <!-- 3. VIP CAM -->
       <div class="card" id="card-cam">
         <div class="card-header">
           <h3>🔥 SPYCAM VIP DARK 🔥</h3>
@@ -1427,9 +1415,9 @@
 
     let palavrasProibidasBanco = [];
 
-    // LINKS DE CHECKOUT ATUALIZADOS POR CATEGORIA E DURAÇÃO (INCLUINDO A PROMOÇÃO)
+    // LINKS DE CHECKOUT ATUALIZADOS COM O LINK SOLICITADO
     const CHECKOUTS = {
-      promo_30: "INSIRA_AQUI_SEU_LINK_DE_CHECKOUT_DA_PROMO", // COLOQUE SEU LINK DO CHECKOUT DA SYNC PAYMENTS AQUI
+      promo_30: "https://link.syncpayments.com.br/ronwrZ",
       amador_30: "https://link.syncpayments.com.br/MicvMz",
       amador_90: "https://link.syncpayments.com.br/dmpxmp",
       cam_30: "https://link.syncpayments.com.br/SEl2IQ",
@@ -1847,10 +1835,11 @@
             const catFull = item.categoria_id.toLowerCase();
             vipsAtivosLista.push(catFull);
 
-            // SE A COMPRA FOR A PROMOÇÃO OU COMBO DUPLO LIBERA AMBOS OS CARDS AUTOMATICAMENTE
+            // SE A COMPRA FOR DA PROMOÇÃO OU COMBO DUPLO LIBERA OS CARDS CORRESPONDENTES
             if (catFull.includes('promo') || catFull.includes('combo') || catFull.includes('amador_e_cam')) {
               liberarCardVisual('amador');
               liberarCardVisual('cam');
+              liberarCardVisual('promo_30');
             } else {
               const catBase = catFull.split('_')[0];
               liberarCardVisual(catBase);
