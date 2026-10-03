@@ -28,6 +28,7 @@
       --yellow-neon: #facc15;
       --yellow-glow: rgba(234, 179, 8, 0.55);
       --red-neon: #ef4444;
+      --green-neon: #22c55e;
       --text-main: #f9fafb;
       --text-sub: #9ca3af;
       --border-color: rgba(255, 255, 255, 0.08);
@@ -38,13 +39,8 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
     }
 
-    /* Permite seleção apenas nos campos editáveis */
     input, textarea {
       -webkit-user-select: text;
       -moz-user-select: text;
@@ -70,29 +66,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* PROTEÇÃO CONTRA PRINT SCREEN E CAPTURA */
-    @media print {
-      html, body {
-        display: none !important;
-      }
-    }
-
-    #protection-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: #060910;
-      z-index: 9999999;
-      justify-content: center;
-      align-items: center;
-      color: #ef4444;
-      font-weight: 900;
-      font-size: 20px;
-      text-align: center;
-      padding: 20px;
-    }
-
-    /* ===== PARTÍCULAS (SOMENTE DESKTOP) ===== */
     .particles-bg {
       position: fixed;
       inset: 0;
@@ -118,7 +91,6 @@
       100% { transform: translate3d(0, -10vh, 0) scale(1); opacity: 0; }
     }
 
-    /* ===== HEADER ===== */
     header {
       background: rgba(10, 15, 26, 0.92);
       border-bottom: 1px solid var(--border-neon);
@@ -205,7 +177,6 @@
       background: rgba(234, 179, 8, 0.15);
     }
 
-    /* ===== CONTAINER ===== */
     .main-container {
       max-width: 900px;
       margin: 20px auto;
@@ -214,7 +185,7 @@
       z-index: 1;
     }
 
-    /* ===== HERO BANNER ===== */
+    /* HERO BANNER */
     .hero-banner {
       position: relative;
       background:
@@ -223,7 +194,7 @@
       border: 1px solid var(--border-neon);
       border-radius: 22px;
       padding: 36px 22px 30px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       text-align: center;
       overflow: hidden;
       box-shadow: 0 0 30px rgba(234, 179, 8, 0.12), 0 16px 40px rgba(0, 0, 0, 0.4);
@@ -286,7 +257,67 @@
       box-shadow: 0 0 38px rgba(234, 179, 8, 0.75), 0 10px 24px rgba(0, 0, 0, 0.5);
     }
 
-    /* ===== DEMO ===== */
+    /* CARD OFERTA PROMO COMBO LEVE 2 PAGUE 1 */
+    .card-combo-promo {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(16, 22, 31, 0.95) 100%);
+      border: 2px solid var(--yellow-neon);
+      border-radius: 22px;
+      padding: 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 0 30px rgba(234, 179, 8, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .combo-tag-top {
+      position: absolute;
+      top: 0; right: 0;
+      background: #ef4444;
+      color: #fff;
+      font-weight: 900;
+      font-size: 11px;
+      padding: 6px 16px;
+      border-bottom-left-radius: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .combo-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .combo-header h3 {
+      font-size: 20px;
+      font-weight: 900;
+      color: #fff;
+    }
+    .combo-price-box {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .combo-price-de {
+      font-size: 14px;
+      color: var(--text-sub);
+      text-decoration: line-through;
+    }
+    .combo-price-por {
+      font-size: 24px;
+      font-weight: 900;
+      color: #facc15;
+    }
+    .combo-badge-discount {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    /* DEMO */
     .demo-section {
       background: var(--card-bg);
       border: 1px solid var(--border-neon);
@@ -326,7 +357,7 @@
       border: none;
     }
 
-    /* ===== GRID ===== */
+    /* GRID */
     .grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -409,7 +440,7 @@
 
     .card-body { padding: 20px; }
 
-    /* ===== PREVIEW ===== */
+    /* PREVIEW */
     .preview-box {
       width: 100%;
       display: grid;
@@ -443,7 +474,7 @@
       background: #000;
     }
 
-    /* ===== BENEFÍCIOS ===== */
+    /* BENEFÍCIOS */
     .vip-description { margin-bottom: 22px; }
 
     .vip-description p {
@@ -475,7 +506,7 @@
       flex-shrink: 0;
     }
 
-    /* ===== BOTÕES E SELEÇÃO DE PLANOS ===== */
+    /* BOTÕES */
     .plan-actions {
       display: flex;
       flex-direction: column;
@@ -506,6 +537,15 @@
     .btn-buy:hover {
       transform: translate3d(0, -2px, 0);
       box-shadow: 0 0 34px rgba(234, 179, 8, 0.75), 0 10px 24px rgba(0,0,0,0.5);
+    }
+
+    .btn-buy-promo {
+      background: linear-gradient(135deg, #22c55e 0%, #15803d 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.4), 0 6px 18px rgba(0,0,0,0.4) !important;
+    }
+    .btn-buy-promo:hover {
+      box-shadow: 0 0 34px rgba(34, 197, 94, 0.75), 0 10px 24px rgba(0,0,0,0.5) !important;
     }
 
     .btn-paypal {
@@ -560,7 +600,7 @@
       gap: 6px;
     }
 
-    /* ===== TAGS CHAT ===== */
+    /* TAGS CHAT */
     .tag-vip-amarela {
       background: linear-gradient(135deg, #facc15, #ca8a04);
       color: #000;
@@ -607,7 +647,7 @@
     .btn-ban-user { background: #7c3aed; }
     .btn-ban-user:hover { background: #6d28d9; }
 
-    /* ===== REVIEWS ===== */
+    /* REVIEWS */
     .reviews-section {
       margin-top: 44px;
       background: var(--card-bg);
@@ -667,7 +707,7 @@
       line-height: 1.5;
     }
 
-    /* ===== RODAPÉ ===== */
+    /* RODAPÉ */
     footer {
       margin-top: 50px;
       background: rgba(10, 15, 26, 0.92);
@@ -705,7 +745,7 @@
       padding-top: 14px;
     }
 
-    /* ===== MODAIS ===== */
+    /* MODAIS */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -783,7 +823,6 @@
       font-weight: bold;
     }
 
-    /* ===== AJUSTES MOBILE ===== */
     @media (max-width: 768px) {
       .hero-banner h2 { font-size: 20px; }
       .hero-banner { padding: 28px 18px 24px; }
@@ -817,11 +856,6 @@
   </style>
 </head>
 <body>
-
-  <!-- TELA DE PROTEÇÃO (CAPTURA) -->
-  <div id="protection-overlay">
-    ⚠️ CAPTURA OU PRINT SCREEN DESATIVADO NESTA PÁGINA ⚠️
-  </div>
 
   <!-- PARTÍCULAS -->
   <div class="particles-bg" id="particlesBg"></div>
@@ -912,7 +946,33 @@
       <span class="badge-promo">🔥 PROMOÇÃO POR TEMPO LIMITADO</span>
       <h2>GALERIA VIP PRIVADA – ACESSO A CONTEÚDOS EXCLUSIVOS</h2>
       <p>Vídeos amadores reais, vazados e exclusivos. Sem censura. Sem mensalidade. Acesso imediato.</p>
-      <a href="#card-amador" class="hero-cta">⚡ ENTRAR NA GALERIA VIP AGORA – A PARTIR DE R$ 19,90</a>
+      <a href="#card-combo-promo" class="hero-cta">⚡ APROVEITAR OFERTA LEVE 2 PAGUE 1 (30 DIAS)</a>
+    </div>
+
+    <!-- SEÇÃO EXCLUSIVA DE COMBO / PROMOÇÃO LEVE 2 PAGUE 1 -->
+    <div class="card-combo-promo" id="card-combo-promo">
+      <div class="combo-tag-top">💥 OFERTA DUPLA EXCLUSIVA</div>
+      <div class="combo-header">
+        <h3>🔥 COMBO VIP TOTAL: AMADOR + SPYCAM DARK</h3>
+        <p style="font-size: 13px; color: #d1d5db;">Libere o acesso completo a <b>AMBAS</b> as galerias VIP por 30 dias com desconto especial!</p>
+      </div>
+
+      <ul class="benefits-list" style="margin-bottom: 16px;">
+        <li><span class="check">✓</span> <b>Acesso ilimitado à Galeria Amador Premium (30 Dias)</b></li>
+        <li><span class="check">✓</span> <b>Acesso ilimitado à Galeria Spycam VIP Dark (30 Dias)</b></li>
+        <li><span class="check">✓</span> Economize instantaneamente no pacote promocional</li>
+      </ul>
+
+      <div class="combo-price-box">
+        <span class="combo-price-de">De R$ 39,80</span>
+        <span class="combo-price-por">Por R$ 29,65</span>
+        <span class="combo-badge-discount">ECONOMIA DE R$ 10,15</span>
+      </div>
+
+      <button id="buy-promo-30" class="btn-buy btn-buy-promo" onclick="iniciarCompra('promo_30')">
+        🚀 QUERO LEVAR OS 2 VIPs POR R$ 29,65 (30 DIAS)
+      </button>
+      <div class="texto-seguranca" style="margin-top: 10px;">⚡ Ativação Imediata via PIX • Liberado na hora no seu e-mail</div>
     </div>
 
     <!-- VÍDEO DE DEMONSTRAÇÃO -->
@@ -941,10 +1001,10 @@
         <div class="card-body">
           <div class="preview-box">
             <div class="video-item">
-              <iframe src="https://player.mediadelivery.net/embed/756775/f8c68f57-9c99-47ec-ba85-361d76f3c9f7?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
+              <iframe src="https://player.mediadelivery.net/embed/756775/f8c68f57-9c99-47ec-ba85-361d76f3c9f7?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media" allowfullscreen="true"></iframe>
             </div>
             <div class="video-item">
-              <iframe src="https://player.mediadelivery.net/embed/756775/7a3351fb-8c11-4c04-9841-dfce33693b73?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
+              <iframe src="https://player.mediadelivery.net/embed/756775/7a3351fb-8c11-4c04-9841-dfce33693b73?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media" allowfullscreen="true"></iframe>
             </div>
           </div>
 
@@ -992,10 +1052,10 @@
         <div class="card-body">
           <div class="preview-box">
             <div class="video-item">
-              <iframe src="https://player.mediadelivery.net/embed/756775/f0d20e79-73dd-4cac-83a6-68cfee459b41?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
+              <iframe src="https://player.mediadelivery.net/embed/756775/f0d20e79-73dd-4cac-83a6-68cfee459b41?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media" allowfullscreen="true"></iframe>
             </div>
             <div class="video-item">
-              <iframe src="https://player.mediadelivery.net/embed/756775/2ddbb872-7db1-4b9f-9106-15aa573c0219?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media;" allowfullscreen="true"></iframe>
+              <iframe src="https://player.mediadelivery.net/embed/756775/2ddbb872-7db1-4b9f-9106-15aa573c0219?autoplay=false&preload=false" loading="lazy" allow="gyroscope; encrypted-media" allowfullscreen="true"></iframe>
             </div>
           </div>
 
@@ -1135,7 +1195,7 @@
             <span class="review-user">M***o S.</span>
             <span class="review-stars">★★★★★</span>
           </div>
-          <div class="review-text">Paguei no PIX e liberou no mesmo minuto aqui no site. Galeria top demais, vale muito a pena!</div>
+          <div class="review-text">Paguei no PIX a oferta combo e liberou ambos os VIPs na hora. Galeria top demais, vale muito a pena!</div>
         </div>
         <div class="review-item">
           <div class="review-header">
@@ -1200,7 +1260,6 @@
         <div id="perfil-status-plano" style="font-size: 13px; font-weight: 700;">-</div>
 
         <div id="perfil-vips-detalhes" style="margin-top: 10px; font-size: 12px; color: #d1d5db; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px;">
-          <!-- Lista de VIPs ativos -->
         </div>
       </div>
 
@@ -1282,65 +1341,7 @@
 
   <script src="links-cam.js"></script>
 
-  <!-- PROTEÇÃO DE PRINT E ATALHOS DE TECLADO -->
   <script>
-    // Bloqueia o clique direito
-    document.addEventListener('contextmenu', e => e.preventDefault());
-
-    // Bloqueia atalhos de captura e inspeção
-    document.addEventListener('keydown', function (e) {
-      if (
-        e.key === 'PrintScreen' ||
-        e.keyCode === 44 ||
-        (e.ctrlKey && e.key === 'p') ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
-        (e.ctrlKey && (e.key === 'u' || e.key === 'U')) ||
-        e.key === 'F12'
-      ) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText('');
-        }
-        exibirOverlayProtecao();
-        return false;
-      }
-    });
-
-    // Limpa a área de transferência caso aperte PrintScreen
-    document.addEventListener('keyup', function (e) {
-      if (e.key === 'PrintScreen' || e.keyCode === 44) {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText('');
-        }
-        exibirOverlayProtecao();
-      }
-    });
-
-    // Oculta tela se perder o foco (ex: gravadores / printscreen externos)
-    window.addEventListener('blur', function() {
-      document.body.style.filter = 'blur(15px)';
-    });
-    window.addEventListener('focus', function() {
-      document.body.style.filter = 'none';
-      ocultarOverlayProtecao();
-    });
-
-    function exibirOverlayProtecao() {
-      const overlay = document.getElementById('protection-overlay');
-      if (overlay) {
-        overlay.style.display = 'flex';
-        setTimeout(() => {
-          overlay.style.display = 'none';
-        }, 2000);
-      }
-    }
-
-    function ocultarOverlayProtecao() {
-      const overlay = document.getElementById('protection-overlay');
-      if (overlay) overlay.style.display = 'none';
-    }
-
     document.addEventListener('click', function (e) {
       if (e.target && e.target.matches('.photo-wrapper img')) {
         const modal = document.getElementById('modalFotoFullscreen');
@@ -1426,12 +1427,13 @@
 
     let palavrasProibidasBanco = [];
 
-    // LINKS DE CHECKOUT ATUALIZADOS POR CATEGORIA E DURAÇÃO
+    // LINKS DE CHECKOUT ATUALIZADOS POR CATEGORIA E DURAÇÃO (INCLUINDO A PROMOÇÃO)
     const CHECKOUTS = {
+      promo_30: "INSIRA_AQUI_SEU_LINK_DE_CHECKOUT_DA_PROMO", // COLOQUE SEU LINK DO CHECKOUT DA SYNC PAYMENTS AQUI
       amador_30: "https://link.syncpayments.com.br/MicvMz",
-      amador_90: "https://link.syncpayments.com.br/dmpxmp", // Insira o link do checkout de 90 dias caso seja diferente
+      amador_90: "https://link.syncpayments.com.br/dmpxmp",
       cam_30: "https://link.syncpayments.com.br/SEl2IQ",
-      cam_90: "https://link.syncpayments.com.br/zXDVl7"     // Insira o link do checkout de 90 dias caso seja diferente
+      cam_90: "https://link.syncpayments.com.br/zXDVl7"
     };
 
     window.onload = async () => {
@@ -1503,6 +1505,19 @@
       } else {
         alert(dias === 0 ? "Usuário Banido PERMANENTEMENTE!" : `Usuário suspenso por ${dias} dia(s)!`);
         carregarListaBanidosAdmin();
+      }
+    }
+
+    async function promptBanirUsuario(userId) {
+      if (!ehAdmin) return;
+      const diasStr = prompt("Quantos dias de banimento? (Digite 0 para banimento permanente):", "1");
+      if (diasStr !== null) {
+        const dias = parseInt(diasStr, 10);
+        if (!isNaN(dias) && dias >= 0) {
+          await banirUsuario(userId, dias);
+        } else {
+          alert("Valor de dias inválido.");
+        }
       }
     }
 
@@ -1666,6 +1681,7 @@
         const nomesFormatados = vipsAtivosLista.map(cat => {
           if (cat.startsWith('amador')) return '⭐ Amador Premium';
           if (cat.startsWith('cam')) return '🔥 Spycam Dark';
+          if (cat.includes('promo')) return '💥 Oferta Dupla (Amador + Spycam)';
           return cat.toUpperCase();
         });
 
@@ -1828,20 +1844,17 @@
         if (compras && compras.length > 0 && !error) {
           usuarioPossuiVip = true;
           compras.forEach(item => {
-            const catFull = item.categoria_id;
-            const catBase = catFull.split('_')[0];
+            const catFull = item.categoria_id.toLowerCase();
             vipsAtivosLista.push(catFull);
 
-            const badge = document.getElementById(`badge-${catBase}`);
-            const actions = document.getElementById(`actions-${catBase}`);
-            const btnAccess = document.getElementById(`access-${catBase}`);
-
-            if (badge) {
-              badge.innerHTML = "🔓 Liberado";
-              badge.className = "status-badge liberado";
+            // SE A COMPRA FOR A PROMOÇÃO OU COMBO DUPLO LIBERA AMBOS OS CARDS AUTOMATICAMENTE
+            if (catFull.includes('promo') || catFull.includes('combo') || catFull.includes('amador_e_cam')) {
+              liberarCardVisual('amador');
+              liberarCardVisual('cam');
+            } else {
+              const catBase = catFull.split('_')[0];
+              liberarCardVisual(catBase);
             }
-            if (actions) actions.style.setProperty('display', 'none', 'important');
-            if (btnAccess) btnAccess.style.display = "block";
           });
         } else {
           usuarioPossuiVip = false;
@@ -1849,6 +1862,19 @@
       } catch (err) {
         console.error("Erro ao verificar compras:", err);
       }
+    }
+
+    function liberarCardVisual(catBase) {
+      const badge = document.getElementById(`badge-${catBase}`);
+      const actions = document.getElementById(`actions-${catBase}`);
+      const btnAccess = document.getElementById(`access-${catBase}`);
+
+      if (badge) {
+        badge.innerHTML = "🔓 Liberado";
+        badge.className = "status-badge liberado";
+      }
+      if (actions) actions.style.setProperty('display', 'none', 'important');
+      if (btnAccess) btnAccess.style.display = "block";
     }
 
     async function verificarSeUserEhVip(userId) {
@@ -1966,46 +1992,26 @@
         line-height: 1.45;
         word-break: break-word;
       `;
-      div.innerHTML = `${botoesAcao}<b style="color: #facc15;">${escaparHTML(nome)}</b>${seloTag}: <span style="color: #e5e7eb;">${escaparHTML(texto)}</span>`;
-      box.appendChild(div);
-    }
 
-    function promptBanirUsuario(userId) {
-      const opcao = prompt("Escolha a duração do banimento:\n1 = 1 dia\n3 = 3 dias\n7 = 7 dias\n15 = 15 dias\n0 = BAN PERMANENTE");
-      if (opcao === null) return;
-      const dias = parseInt(opcao);
-      if (!isNaN(dias)) {
-        banirUsuario(userId, dias);
-      }
+      div.innerHTML = `
+        ${botoesAcao}
+        <strong style="color: #facc15;">${escaparHTML(nome)}</strong>${seloTag}: 
+        <span style="color: #e5e7eb;">${escaparHTML(texto)}</span>
+      `;
+
+      box.appendChild(div);
     }
 
     async function enviarMensagemChat() {
       if (!usuarioAtual) {
-        alert("Você precisa criar uma conta ou entrar para participar do chat!");
         abrirModal();
         return;
       }
 
       const estaBanido = await verificarSeUsuarioEstaBanido(usuarioAtual.id);
       if (estaBanido) {
-        alert("Sua conta está impossibilitada de enviar mensagens no chat no momento.");
+        alert("Sua conta está temporariamente ou permanentemente proibida de enviar mensagens no chat.");
         return;
-      }
-
-      if (!meuApelidoChat) {
-        carregarApelidoDoUsuario();
-        if (!meuApelidoChat) {
-          const nomeDigitado = prompt("Escolha o seu apelido para o chat:");
-          if (!nomeDigitado || !nomeDigitado.trim()) return;
-
-          if (contemPalavrasProibidasOuLinks(nomeDigitado)) {
-            alert("Apelido inválido ou com caracteres/termos proibidos.");
-            return;
-          }
-
-          meuApelidoChat = nomeDigitado.trim();
-          localStorage.setItem(`chat_apelido_${usuarioAtual.id}`, meuApelidoChat);
-        }
       }
 
       const input = document.getElementById('chat-input-texto');
@@ -2013,78 +2019,28 @@
 
       if (!texto) return;
 
-      if (texto.length > 150) {
-        alert("Sua mensagem ultrapassou o limite de 150 caracteres.");
-        return;
-      }
-
       if (contemPalavrasProibidasOuLinks(texto)) {
-        alert("Proibido o envio de links, redes sociais (@) ou palavras não permitidas.");
+        alert("Sua mensagem contém links, divulgações ou termos não permitidos.");
         return;
       }
 
-      input.value = '';
-
       const { error } = await _supabase
         .from('chat_mensagens')
-        .insert([
-          {
-            user_id: usuarioAtual.id,
-            nome_exibicao: meuApelidoChat,
-            mensagem: texto
-          }
-        ]);
+        .insert([{
+          user_id: usuarioAtual.id,
+          nome_exibicao: meuApelidoChat,
+          mensagem: texto
+        }]);
 
       if (error) {
-        console.error("Erro no envio:", error);
-        alert("Erro ao enviar mensagem no chat.");
-      }
-    }
-
-    function alterarNomeChat() {
-      if (!usuarioAtual) {
-        alert("Você precisa estar logado para alterar seu apelido.");
-        abrirModal();
-        return;
-      }
-
-      const novoNome = prompt("Digite seu novo apelido:", meuApelidoChat);
-      if (novoNome && novoNome.trim()) {
-        if (contemPalavrasProibidasOuLinks(novoNome)) {
-          alert("Apelido contém termos ou símbolos não permitidos!");
-          return;
-        }
-        meuApelidoChat = novoNome.trim();
-        localStorage.setItem(`chat_apelido_${usuarioAtual.id}`, meuApelidoChat);
-        alert("Apelido alterado com sucesso para: " + meuApelidoChat);
-        if (document.getElementById('modalPerfil').style.display === 'flex') {
-          document.getElementById('perfil-apelido').innerText = meuApelidoChat;
-        }
-      }
-    }
-
-    async function deletarMinhaMensagem(msgId) {
-      if (!usuarioAtual) return;
-      if (!confirm("Deseja apagar sua mensagem?")) return;
-
-      const { error } = await _supabase
-        .from('chat_mensagens')
-        .delete()
-        .eq('id', msgId)
-        .eq('user_id', usuarioAtual.id);
-
-      if (error) {
-        alert("Erro ao apagar mensagem.");
+        alert("Erro ao enviar mensagem: " + error.message);
       } else {
-        const el = document.getElementById(`msg-item-${msgId}`);
-        if (el) el.remove();
+        input.value = '';
       }
     }
 
     async function deletarMensagem(msgId) {
       if (!ehAdmin) return;
-      if (!confirm("Deseja apagar esta mensagem como Administrador?")) return;
-
       const { error } = await _supabase
         .from('chat_mensagens')
         .delete()
@@ -2092,68 +2048,93 @@
 
       if (error) {
         alert("Erro ao excluir mensagem.");
-      } else {
-        const el = document.getElementById(`msg-item-${msgId}`);
-        if (el) el.remove();
-        carregarListaAdmin();
+      }
+    }
+
+    async function deletarMinhaMensagem(msgId) {
+      if (!usuarioAtual) return;
+      const { error } = await _supabase
+        .from('chat_mensagens')
+        .delete()
+        .eq('id', msgId)
+        .eq('user_id', usuarioAtual.id);
+
+      if (error) {
+        alert("Erro ao apagar sua mensagem.");
       }
     }
 
     async function limparChatInteiro() {
       if (!ehAdmin) return;
-      if (!confirm("⚠️ ATENÇÃO: Tem certeza que deseja APAGAR TODAS as mensagens do chat? Esta ação não pode ser desfeita!")) return;
+      if (!confirm("Tem certeza que deseja apagar TODAS as mensagens do chat?")) return;
 
       const { error } = await _supabase
         .from('chat_mensagens')
         .delete()
-        .gt('id', 0);
+        .neq('id', '00000000-0000-0000-0000-000000000000');
 
       if (error) {
-        alert("Erro ao limpar chat: " + error.message);
+        alert("Erro ao limpar chat.");
       } else {
-        alert("Chat limpo com sucesso!");
-        carregarMensagensAntigas();
         carregarListaAdmin();
+        carregarMensagensAntigas();
       }
     }
 
     async function carregarListaAdmin() {
-      const box = document.getElementById('admin-lista-msgs');
-      if (!box) return;
+      const container = document.getElementById('admin-lista-msgs');
+      if (!container) return;
 
-      const { data: mensagens } = await _supabase
+      const { data, error } = await _supabase
         .from('chat_mensagens')
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(30);
+        .limit(20);
 
-      box.innerHTML = '';
-      if (!mensagens || mensagens.length === 0) {
-        box.innerHTML = '<div style="font-size:12px; color:var(--text-sub); text-align:center;">Nenhuma mensagem enviada.</div>';
+      container.innerHTML = '';
+      if (error || !data || data.length === 0) {
+        container.innerHTML = '<div style="font-size:12px; color:var(--text-sub); text-align:center;">Nenhuma mensagem encontrada.</div>';
         return;
       }
 
-      mensagens.forEach(m => {
-        const item = document.createElement('div');
-        item.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:#10161f; padding:7px; border-radius:8px; font-size:11px;';
-        item.innerHTML = `
-          <div>
-            <b style="color:var(--yellow-pix);">${escaparHTML(m.nome_exibicao)}:</b>
-            <span style="color:#fff;">${escaparHTML(m.mensagem)}</span>
+      data.forEach(m => {
+        const div = document.createElement('div');
+        div.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:#10161f; padding:6px 10px; border-radius:8px; font-size:12px;';
+        div.innerHTML = `
+          <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:75%;">
+            <b style="color:#facc15;">${escaparHTML(m.nome_exibicao)}:</b> <span style="color:#ccc;">${escaparHTML(m.mensagem)}</span>
           </div>
-          <div style="display:flex; gap:4px;">
-            <button onclick="promptBanirUsuario('${m.user_id}')" style="background:linear-gradient(135deg,#7c3aed,#6d28d9); color:#fff; border:none; padding:3px 8px; border-radius:6px; font-weight:bold; cursor:pointer;">Banir</button>
-            <button onclick="deletarMensagem('${m.id}')" style="background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; border:none; padding:3px 8px; border-radius:6px; font-weight:bold; cursor:pointer;">Apagar</button>
-          </div>
+          <button onclick="deletarMensagem('${m.id}')" style="background:#ef4444; color:#fff; border:none; padding:2px 8px; border-radius:6px; cursor:pointer; font-size:10px; font-weight:bold;">Excluir</button>
         `;
-        box.appendChild(item);
+        container.appendChild(div);
       });
     }
 
+    function alterarNomeChat() {
+      if (!usuarioAtual) {
+        abrirModal();
+        return;
+      }
+
+      const novoNome = prompt("Digite seu novo apelido para o chat:", meuApelidoChat);
+      if (novoNome && novoNome.trim() !== "") {
+        meuApelidoChat = novoNome.trim().substring(0, 20);
+        localStorage.setItem(`chat_apelido_${usuarioAtual.id}`, meuApelidoChat);
+        alert("Apelido alterado com sucesso para: " + meuApelidoChat);
+      }
+    }
+
     function escaparHTML(str) {
-      return str.replace(/[&<>'"]/g,
-        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-      );
+      if (!str) return '';
+      return str.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        }[m];
+      });
     }
   </script>
 </body>
